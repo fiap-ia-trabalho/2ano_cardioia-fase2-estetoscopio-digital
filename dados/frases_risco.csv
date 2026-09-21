@@ -1,0 +1,81 @@
+frase,situacao,grupo_semantico
+Estou com uma dor forte no peito que desce pelo braço esquerdo e não passa de jeito nenhum.,alto risco,dor_toracica_irradiada
+"A dor no meu peito espalhou para o queixo e para o ombro esquerdo, começou faz vinte minutos.",alto risco,dor_toracica_irradiada
+dor no peito irradiando pro braco esquerdo com formigamento na mao,alto risco,dor_toracica_irradiada
+"Sinto um aperto muito forte no peito mesmo parado no sofá, sem ter feito esforço nenhum.",alto risco,dor_toracica_em_repouso
+A dor no peito apareceu enquanto eu dormia e continua mesmo depois de eu levantar.,alto risco,dor_toracica_em_repouso
+De repente minha fala embolou e o lado direito do rosto caiu.,alto risco,sinais_neurologicos_subitos
+Perdi a força no braço e na perna do lado esquerdo agora há pouco.,alto risco,sinais_neurologicos_subitos
+minha visao escureceu de um lado so e eu nao consigo levantar o braco,alto risco,sinais_neurologicos_subitos
+Comecei a faltar ar do nada e não consigo completar uma frase inteira.,alto risco,dispneia_subita
+"Estou ofegante parado, respirando rápido e curto, e isso começou há meia hora.",alto risco,dispneia_subita
+"nao consigo respirar direito, sinto que falta o ar mesmo sentada",alto risco,dispneia_subita
+Desmaiei no trabalho e só acordei quando me colocaram no chão.,alto risco,sincope
+Apaguei por alguns segundos em pé na fila e não lembro de ter caído.,alto risco,sincope
+"Dor no peito com suor frio escorrendo e enjoo forte, estou passando mal.",alto risco,dor_toracica_com_sudorese
+"Fiquei pálido, suando gelado, com um peso no peito que não alivia.",alto risco,dor_toracica_com_sudorese
+"Meu coração disparou e eu quase desmaiei, tive que sentar no chão.",alto risco,palpitacao_com_presincope
+coracao batendo muito rapido e a vista escureceu junto,alto risco,palpitacao_com_presincope
+Acordei no meio da noite sufocando e tive que sentar na beirada da cama para respirar.,alto risco,ortopneia_noturna
+"Não consigo deitar, afogo na hora que encosto a cabeça no travesseiro.",alto risco,ortopneia_noturna
+A dor no peito que antes só vinha subindo escada agora vem andando devagar.,alto risco,angina_progressiva
+Cada dia eu preciso de menos esforço para a dor no peito aparecer.,alto risco,angina_progressiva
+"Meu marido ficou confuso de repente, não sabe que dia é e fala coisa sem sentido.",alto risco,confusao_mental_subita
+Fiquei desorientada de uma hora para outra e não reconheci a minha rua.,alto risco,confusao_mental_subita
+Minhas pernas incharam muito em dois dias e agora eu também estou sem ar.,alto risco,edema_com_dispneia
+"Ganhei quatro quilos numa semana, estou inchada até a barriga e cansando para andar.",alto risco,edema_com_dispneia
+"Uma dor na boca do estômago muito forte com suor frio, e eu sou diabética.",alto risco,dor_epigastrica_atipica
+Queimação forte no estômago junto com falta de ar e o braço adormecido.,alto risco,dor_epigastrica_atipica
+"Medi a pressão e deu 19 por 11, estou com dor de cabeça muito forte e vendo embaçado.",alto risco,crise_hipertensiva
+pressao 18 por 12 com dor na nuca e vomito,alto risco,crise_hipertensiva
+Meu coração está a mais de 150 batimentos há uma hora e não desacelera.,alto risco,taquicardia_sustentada
+O pulso está disparado sem parar desde de manhã e eu estou tremendo.,alto risco,taquicardia_sustentada
+A dor no peito já dura mais de trinta minutos sem melhorar nada.,alto risco,dor_toracica_prolongada
+faz quarenta minutos que o peito aperta e nao passa com nada,alto risco,dor_toracica_prolongada
+"Meus lábios ficaram roxos e a ponta dos dedos também, estou gelada.",alto risco,cianose
+A criança está com o rosto arroxeado e respirando com dificuldade.,alto risco,cianose
+"Fiquei tão fraca que não consigo ficar em pé, e o peito está pesado.",alto risco,fraqueza_intensa_com_toracalgia
+não tenho força nem para segurar o copo e estou com falta de ar,alto risco,fraqueza_intensa_com_toracalgia
+"Tossi e saiu sangue, junto com uma dor no peito ao respirar.",alto risco,hemoptise
+"Acordo toda madrugada com dor no peito em repouso, já são três noites.",alto risco,dor_toracica_noturna_recorrente
+"Fiquei muito tonta, a pressão caiu, quase apaguei e estou suando frio.",alto risco,hipotensao_com_presincope
+Carreguei caixas na mudança ontem e hoje meu peito está dolorido quando eu aperto com a mão.,baixo risco,dor_musculoesqueletica_toracica
+Fiz supino na academia e o músculo do peito está doendo ao levantar o braço.,baixo risco,dor_musculoesqueletica_toracica
+dor no peito que so doi quando eu aperto o lugar com o dedo,baixo risco,dor_musculoesqueletica_toracica
+Tive um leve incômodo nas costas depois de dormir em posição ruim.,baixo risco,dor_lombar_postural
+Minha lombar está doendo de ficar sentada muito tempo no escritório.,baixo risco,dor_lombar_postural
+Sinto uma queimação subindo depois que eu como muito à noite.,baixo risco,refluxo_azia
+Comi feijoada e fiquei com azia e gosto amargo na boca.,baixo risco,refluxo_azia
+"azia depois do almoco, melhora com antiacido",baixo risco,refluxo_azia
+Ando um pouco cansada essa semana porque dormi mal com o barulho da obra.,baixo risco,cansaco_leve_explicado
+"Estou cansada no fim do dia, mas melhora depois que eu descanso um pouco.",baixo risco,cansaco_leve_explicado
+"Dor de cabeça leve no fim da tarde, passa com um analgésico comum.",baixo risco,cefaleia_tensional
+Minha cabeça dói quando eu fico muitas horas no computador sem pausa.,baixo risco,cefaleia_tensional
+"Estou com coriza, espirros e a garganta um pouco irritada desde ontem.",baixo risco,resfriado_comum
+"peguei um resfriado, to com nariz entupido e tosse leve",baixo risco,resfriado_comum
+Tive uma cãibra na panturrilha de madrugada e passou em um minuto.,baixo risco,caimbra
+Minha perna travou de cãibra depois da caminhada e melhorou alongando.,baixo risco,caimbra
+Fiquei nervosa antes da apresentação e senti o coração acelerar um pouco.,baixo risco,ansiedade_situacional
+"Senti um aperto no peito na hora da prova, passou quando eu me acalmei.",baixo risco,ansiedade_situacional
+"Meu joelho dói quando eu subo escada, faz tempo que é assim.",baixo risco,dor_articular_cronica
+Dor no ombro que piora quando eu levanto o braço acima da cabeça.,baixo risco,dor_articular_cronica
+"Comi rápido demais e fiquei empanzinada, com um desconforto na barriga.",baixo risco,indigestao
+"Estou com a barriga estufada depois do almoço, nada demais.",baixo risco,indigestao
+Tomei três cafés e senti o coração bater mais rápido por alguns minutos.,baixo risco,palpitacao_por_estimulante
+"coracao acelerado depois do energetico, passou sozinho em pouco tempo",baixo risco,palpitacao_por_estimulante
+Levantei rápido da cadeira e fiquei tonta por dois segundos.,baixo risco,tontura_postural_breve
+"Sinto uma tontura leve quando eu me levanto muito depressa, passa logo.",baixo risco,tontura_postural_breve
+Comecei musculação essa semana e estou com o corpo todo dolorido.,baixo risco,dor_pos_treino
+"Meu braço está dolorido do treino de ontem, é só dor muscular mesmo.",baixo risco,dor_pos_treino
+"Meus pés incharam um pouco depois de seis horas de ônibus, melhorou deitando.",baixo risco,edema_leve_situacional
+Com esse calor minhas mãos e pés ficam meio inchados no fim do dia.,baixo risco,edema_leve_situacional
+"Corri cinco quilômetros e fiquei com falta de ar, mas normalizou em poucos minutos parado.",baixo risco,dispneia_pos_exercicio
+"fiquei ofegante depois de subir a ladeira, mas voltei a respirar normal em dois minutos",baixo risco,dispneia_pos_exercicio
+Não durmo bem faz alguns dias por causa da preocupação com o trabalho.,baixo risco,sono_ruim
+Acordo várias vezes de noite e amanheço meio pesada.,baixo risco,sono_ruim
+"Durmo tarde e acordo cedo, ando mais lenta durante o dia.",baixo risco,sono_ruim
+Estou gripada e o peito dói só quando eu tusso forte.,baixo risco,dor_toracica_ao_tossir
+"com a tosse da gripe meu peito ficou dolorido, mas so ao tossir",baixo risco,dor_toracica_ao_tossir
+Minha mão formigou porque eu dormi em cima do braço.,baixo risco,parestesia_posicional
+Fico com dor no estômago quando passo muito tempo sem comer.,baixo risco,dor_gastrica_jejum
+"Quando deito de lado eu escuto meu coração batendo, mas é ritmado e normal.",baixo risco,percepcao_batimento_normal

@@ -1,0 +1,49 @@
+sintoma_1,sintoma_2,doenca_associada,peso,origem
+dor no peito,dor torácica,Infarto Agudo do Miocárdio,2,texto_02_sindrome_coronariana_scielo
+aperto no tórax,peso no peito,Infarto Agudo do Miocárdio,2,conhecimento_geral_equipe
+irradiou para o braço esquerdo,dor no braço esquerdo,Infarto Agudo do Miocárdio,3,texto_02_sindrome_coronariana_scielo
+suor frio,sudorese,Infarto Agudo do Miocárdio,2,texto_02_sindrome_coronariana_scielo
+enjoo,náusea,Infarto Agudo do Miocárdio,1,texto_02_sindrome_coronariana_scielo
+dor no peito em repouso,dor que não passa parado,Infarto Agudo do Miocárdio,3,conhecimento_geral_equipe
+sensação de morte iminente,angústia no peito,Infarto Agudo do Miocárdio,2,conhecimento_geral_equipe
+dor muito forte,dor insuportável,Infarto Agudo do Miocárdio,1,conhecimento_geral_equipe
+dor no peito ao esforço,aperto no peito ao esforço,Angina,3,texto_02_sindrome_coronariana_scielo
+subo a escada,subir escada,Angina,3,texto_02_sindrome_coronariana_scielo
+paro para descansar,melhora com repouso,Angina,3,texto_02_sindrome_coronariana_scielo
+queimação no peito,ardência no peito,Angina,2,conhecimento_geral_equipe
+piora com esforço físico,piora quando faço força,Angina,2,texto_02_sindrome_coronariana_scielo
+cansaço constante,fadiga,Insuficiência Cardíaca,2,texto_02_sindrome_coronariana_scielo
+mesmo dormindo,mesmo depois de descansar,Insuficiência Cardíaca,2,conhecimento_geral_equipe
+falta de ar quando deito,falta de ar deitado,Insuficiência Cardíaca,3,conhecimento_geral_equipe
+dois travesseiros,durmo sentado,Insuficiência Cardíaca,3,conhecimento_geral_equipe
+inchando,inchaço,Insuficiência Cardíaca,2,conhecimento_geral_equipe
+pernas inchadas,perna inchada,Insuficiência Cardíaca,3,conhecimento_geral_equipe
+pé para cima,perna elevada,Insuficiência Cardíaca,2,conhecimento_geral_equipe
+sapato aperta,tornozelo inchado,Insuficiência Cardíaca,2,conhecimento_geral_equipe
+tosse seca a noite,tosse noturna,Insuficiência Cardíaca,2,conhecimento_geral_equipe
+canso para caminhar,canso ao andar poucos metros,Insuficiência Cardíaca,2,texto_02_sindrome_coronariana_scielo
+falta de ar,dificuldade para respirar,Insuficiência Cardíaca,2,texto_02_sindrome_coronariana_scielo
+dispneia,respiração curta,Insuficiência Cardíaca,2,texto_02_sindrome_coronariana_scielo
+ganho de peso rápido,barriga inchada,Insuficiência Cardíaca,1,conhecimento_geral_equipe
+coração disparado,palpitação,Arritmia,3,texto_02_sindrome_coronariana_scielo
+coração acelerado,taquicardia,Arritmia,3,conhecimento_geral_equipe
+batimento irregular,coração falhando,Arritmia,3,conhecimento_geral_equipe
+coração descompassado,batedeira no peito,Arritmia,2,conhecimento_geral_equipe
+dura uns minutos e passa,episódio curto que passa sozinho,Arritmia,2,conhecimento_geral_equipe
+sensação de desmaio,quase desmaiei,Arritmia,2,conhecimento_geral_equipe
+tontura,tonteira,Arritmia,1,texto_02_sindrome_coronariana_scielo
+dor de cabeça na nuca,cefaleia na nuca,Hipertensão Arterial,2,conhecimento_geral_equipe
+visão embaçada,vista turva,Hipertensão Arterial,2,conhecimento_geral_equipe
+zumbido no ouvido,apito no ouvido,Hipertensão Arterial,1,conhecimento_geral_equipe
+pressão alta,pressão elevada,Hipertensão Arterial,3,texto_01_hipertensao_scielo
+dor de cabeça pela manhã,cabeça doendo ao acordar,Hipertensão Arterial,2,conhecimento_geral_equipe
+respiro fundo,respirar fundo,Pericardite,3,conhecimento_geral_equipe
+me inclino para a frente,alívio sentado inclinado,Pericardite,3,conhecimento_geral_equipe
+dor no peito com febre,febre junto com dor no peito,Pericardite,2,conhecimento_geral_equipe
+dormir de barriga para cima,pioro deitado de costas,Pericardite,2,conhecimento_geral_equipe
+fala enrolada,fala ficou enrolada,Acidente Vascular Cerebral,3,conhecimento_geral_equipe
+braço fraco,ficou fraco,Acidente Vascular Cerebral,3,conhecimento_geral_equipe
+boca torta,rosto caído de um lado,Acidente Vascular Cerebral,3,conhecimento_geral_equipe
+tontura forte,tontura repentina,Acidente Vascular Cerebral,2,texto_02_sindrome_coronariana_scielo
+perda súbita de visão,vista escureceu de repente,Acidente Vascular Cerebral,2,conhecimento_geral_equipe
+formigamento em um lado do corpo,dormência de um lado,Acidente Vascular Cerebral,2,conhecimento_geral_equipe

@@ -1,0 +1,4 @@
+modelo,acuracia_split_unico,cv_media,cv_desvio
+Regressão Logística,0.9,0.775,0.05
+Árvore de Decisão,0.7,0.6375,0.0829
+Baseline palavra-chave,0.6,,
