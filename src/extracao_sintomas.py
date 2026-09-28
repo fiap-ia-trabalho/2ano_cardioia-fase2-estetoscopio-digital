@@ -247,7 +247,7 @@ def main():
 
     inconclusivos = (df["diagnostico_sugerido"] == ROTULO_INCONCLUSIVO).sum()
     print(f"\nResumo: {len(df) - inconclusivos} sugestões / {inconclusivos} inconclusivos.")
-    print(f"Arquivo gerado: {ARQ_SAIDA}")
+    print(f"Arquivo gerado: {ARQ_SAIDA.relative_to(RAIZ)}")
     print("\nLembrete: sistema de apoio acadêmico. Não substitui avaliação médica.")
     return 0
 
