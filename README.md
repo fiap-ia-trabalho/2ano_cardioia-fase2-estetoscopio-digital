@@ -1,16 +1,14 @@
 # CardioIA — Fase 2: Diagnóstico Automatizado (IA no Estetoscópio Digital)
 
-Módulo de apoio ao diagnóstico que lê relatos de sintomas escritos por pacientes,
-identifica os sintomas mencionados, sugere um diagnóstico a partir de um mapa de
-conhecimento e classifica o nível de risco com um modelo de Machine Learning.
+Protótipo acadêmico que analisa relatos de sintomas por dois métodos: extração de
+expressões associadas a possíveis doenças e classificação de frases em alto ou baixo
+risco com aprendizado de máquina.
 
 Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 
-> **Aviso:** este repositório é um exercício de faculdade. A base é sintética, os rótulos
-> foram atribuídos por estudantes e nenhum conteúdo foi validado clinicamente. Nada aqui
-> deve ser usado para decisão médica.
-
----
+> As bases são sintéticas, os rótulos foram atribuídos por estudantes e as associações
+> não foram validadas clinicamente. As saídas demonstram o funcionamento dos métodos e
+> não devem ser utilizadas para diagnóstico ou triagem de pacientes.
 
 ## Grupo
 
@@ -24,271 +22,280 @@ Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 
 **Tutor:** Leonardo Ruiz Orabona · **Coordenador:** André Godoi
 
----
+## Entregáveis e organização
+
+| Arquivo | Finalidade |
+|---|---|
+| [dados/frases_pacientes.txt](dados/frases_pacientes.txt) | 10 relatos, um por linha, com sintomas, início e impacto na rotina |
+| [dados/mapa_conhecimento.csv](dados/mapa_conhecimento.csv) | 48 associações entre expressões de sintomas e possíveis doenças |
+| [src/extracao_sintomas.py](src/extracao_sintomas.py) | Leitura dos arquivos, extração, pontuação e exportação |
+| [notebooks/01_extracao_sintomas.ipynb](notebooks/01_extracao_sintomas.ipynb) | Demonstração comentada da Parte 1 |
+| [dados/resultado_extracao.csv](dados/resultado_extracao.csv) | Resultados dos 10 relatos |
+| [dados/frases_risco.csv](dados/frases_risco.csv) | 80 frases rotuladas para classificação de risco |
+| [notebooks/02_classificador_risco.ipynb](notebooks/02_classificador_risco.ipynb) | Treinamento, comparação de modelos e avaliação da Parte 2 |
+| [dados/resultado_classificador.csv](dados/resultado_classificador.csv) | Acurácias e estatísticas de validação cruzada |
+| [docs/GOVERNANCA_FASE2.md](docs/GOVERNANCA_FASE2.md) | Proveniência, limitações e discussão de vieses |
+| [requirements.txt](requirements.txt) | Dependências para instalação |
+| [docs/roteiro_video.md](docs/roteiro_video.md) | Arquivo reservado ao roteiro de vídeo, ainda sem conteúdo |
+
+Os notebooks possuem saídas salvas. Para reproduzir o projeto, baixe ou clone o
+repositório completo, mantendo as pastas `dados/`, `src/` e `notebooks/`.
+Os dois notebooks importam funções de `src/extracao_sintomas.py`.
 
 ## Vídeo de demonstração
 
-▶️ **[SUBSTITUIR POR: link do YouTube não listado]**
-
-> Este é o único campo do repositório que ainda precisa ser preenchido à mão. O vídeo
-> tem até 4 minutos e deve ser publicado como **não listado**. O roteiro cronometrado
-> está em [`docs/roteiro_video.md`](docs/roteiro_video.md).
-
----
-
-## Continuidade com a Fase 1
-
-Fase 1 — *Batimentos de Dados*:
-https://github.com/fiap-ia-trabalho/2ano_cardioia-fase1-batimentos-de-dados
-
-O que foi reaproveitado, e como:
-
-- **Corpus textual.** O vocabulário de sintomas do mapa de conhecimento foi construído a
-  partir dos dois textos do SciELO entregues na Fase 1. A coluna `origem` do
-  `mapa_conhecimento.csv` registra, termo a termo, se ele vem de
-  `texto_02_sindrome_coronariana_scielo`, de `texto_01_hipertensao_scielo` ou de
-  `conhecimento_geral_equipe`.
-- **Base numérica.** O `cardio_train_amostra_100` **não** foi usado nesta fase. Ele contém
-  variáveis clínicas tabulares (pressão, colesterol, IMC), não texto, e não alimenta um
-  modelo de NLP. Registramos isso em vez de forçar um uso artificial.
-- **Base de imagens.** Não se aplica à Fase 2, que é inteiramente textual.
-
-### Controle de vazamento entre treino e teste
-
-Quando uma base contém amostras derivadas da mesma origem, dividir treino e teste ao
-acaso faz com que variações de um mesmo caso caiam dos dois lados. O modelo passa a ser
-avaliado em algo que ele praticamente já viu, e a acurácia sobe sem que ele tenha
-melhorado.
-
-A base rotulada desta fase tem uma coluna `grupo_semantico`: frases que são variações da
-mesma ideia clínica pertencem ao mesmo grupo, e a divisão treino/teste é feita **por
-grupo**, nunca por frase.
-
-Medimos o efeito. Rodando a mesma validação cruzada das duas formas:
-
-| divisão | acurácia média |
-|---|---|
-| por grupo (correta) | 77,5% |
-| por frase (com vazamento) | 83,8% |
-| **inflação causada pelo vazamento** | **+6,2 pontos percentuais** |
-
----
-
-## Estrutura do repositório
-
-```
-2ano_cardioia-fase2-estetoscopio-digital/
-├── README.md
-├── requirements.txt
-├── dados/
-│   ├── frases_pacientes.txt          # Parte 1 — 10 relatos de pacientes
-│   ├── mapa_conhecimento.csv         # Parte 1 — 48 linhas sintoma → doença
-│   ├── resultado_extracao.csv        # Parte 1 — saída da execução
-│   ├── frases_risco.csv              # Parte 2 — 80 frases rotuladas
-│   └── resultado_classificador.csv   # Parte 2 — métricas dos modelos
-├── src/
-│   └── extracao_sintomas.py          # Parte 1 — lógica de extração
-├── notebooks/
-│   ├── 01_extracao_sintomas.ipynb    # Parte 1 — comentado, já executado
-│   └── 02_classificador_risco.ipynb  # Parte 2 — comentado, já executado
-└── docs/
-    ├── GOVERNANCA_FASE2.md           # proveniência, vieses, limitações
-    └── roteiro_video.md              # roteiro cronometrado de 4 min
-```
-
-Os dois notebooks estão salvos **com as saídas**. Dá para ler o resultado sem executar.
-
----
+**Status: link ainda não informado.** O roteiro também está pendente de preenchimento.
+O planejamento da equipe prevê um vídeo não listado de até 4 minutos; as exigências de
+formato e duração devem ser conferidas no enunciado completo da atividade.
 
 ## Como executar
 
-Requer Python 3.9 ou superior.
+O projeto declara Python 3.9 ou superior. As dependências usam versões mínimas em
+`requirements.txt`, portanto as versões instaladas podem variar conforme o Python e a
+data da instalação. A revisão de execução reproduziu os resultados com Python 3.12.14,
+pandas 2.2.3, NumPy 2.3.5 e scikit-learn 1.8.0.
 
 ```bash
 git clone https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-estetoscopio-digital.git
 cd 2ano_cardioia-fase2-estetoscopio-digital
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-Parte 1 pela linha de comando:
+Execute a Parte 1 a partir da raiz do projeto:
 
 ```bash
 python src/extracao_sintomas.py
 ```
 
-Ou abrir os notebooks:
+O script lê os relatos e o mapa, mostra as sugestões no terminal e grava
+`dados/resultado_extracao.csv`.
+
+Para executar os notebooks:
 
 ```bash
 jupyter notebook notebooks/
 ```
 
-Dependências: apenas `pandas` e `scikit-learn`. O restante é biblioteca padrão do Python.
-A matriz de confusão é apresentada como tabela do pandas, não como gráfico, para manter
-essa restrição.
+Abra cada notebook, reinicie o kernel e execute todas as células em ordem. A Parte 2
+grava `dados/resultado_classificador.csv`. A execução substitui os respectivos CSVs de
+resultados.
 
----
+O projeto utiliza pandas, scikit-learn e Jupyter. O notebook 02 também importa NumPy,
+instalado como dependência dessas bibliotecas. As matrizes de confusão são tabelas,
+sem dependência de uma biblioteca de gráficos.
 
-## Parte 1 — Extração de sintomas e sugestão de diagnóstico
+## Continuidade com a Fase 1
 
-**Entrada:** 10 relatos em `dados/frases_pacientes.txt`, cada um com o que o paciente
-sente, quando começou e como afeta a rotina. Três relatos foram escritos sem acentuação
-e um parcialmente em caixa alta, de propósito, para testar a normalização.
+Repositório anterior: [Batimentos de Dados](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase1-batimentos-de-dados).
 
-**Mapa de conhecimento:** 48 linhas em `dados/mapa_conhecimento.csv` (96 expressões,
-duas por linha), cobrindo 7
-condições — Infarto Agudo do Miocárdio, Angina, Insuficiência Cardíaca, Arritmia,
-Hipertensão Arterial, Pericardite e Acidente Vascular Cerebral.
+- **Corpus textual:** a coluna `origem` registra 15 linhas atribuídas ao texto de
+  síndrome coronariana, uma ao texto de hipertensão e 32 a `conhecimento_geral_equipe`.
+  Essa identificação registra a procedência declarada pela equipe; não equivale a
+  validação clínica da associação ou de seu peso.
+- **Base numérica:** `cardio_train_amostra_100` não foi utilizada nesta implementação.
+  O classificador recebe frases sintéticas, sem integração com as variáveis tabulares.
+- **Base de imagens:** não foi utilizada, pois os métodos implementados trabalham com texto.
 
-Colunas: `sintoma_1 | sintoma_2 | doenca_associada | peso | origem`.
+## Parte 1 — Extração de sintomas
 
-As duas últimas vão além do que o enunciado pedia:
+### Dados e método
 
-- **`peso`** (1 a 3) — sem ele, "dor no peito" e "irradiou para o braço esquerdo" valem o
-  mesmo, e o sistema não separa infarto de qualquer desconforto torácico.
-- **`origem`** — rastreabilidade: permite distinguir o que tem respaldo nas fontes
-  científicas do que é síntese da equipe.
+As 10 frases simulam relatos de pacientes e incluem variações de acentuação e maiúsculas.
+O mapa contém 48 linhas e 96 expressões, distribuídas em sete condições: Infarto Agudo
+do Miocárdio, Angina, Insuficiência Cardíaca, Arritmia, Hipertensão Arterial, Pericardite
+e Acidente Vascular Cerebral.
 
-**Como funciona o código:**
+| Coluna | Significado |
+|---|---|
+| `sintoma_1` e `sintoma_2` | Expressões pesquisadas nos relatos |
+| `doenca_associada` | Hipótese associada pela regra didática |
+| `peso` | Pontuação de 1 a 3 definida pela equipe, sem calibração clínica |
+| `origem` | Procedência declarada da expressão |
 
-1. **Normalização** (`NFKD` + remoção de acentos + minúsculas + limpeza de pontuação),
-   aplicada dos dois lados da comparação. É o que faz `coracao`, `coração` e `CORAÇÃO`
-   virarem o mesmo termo.
-2. **Busca por trecho** de cada expressão do mapa dentro do relato normalizado.
-3. **Regra anti-contagem-dupla:** quando um termo longo casa com um trecho, aquele trecho
-   fica ocupado, e um termo curto contido nele é descartado. Sem isso, em
-   *"falta de ar quando deito"* o sistema somaria também `falta de ar` e inflaria a
-   própria confiança sem evidência nova.
-4. **Soma dos pesos por doença.** Vence a mais pontuada. Se nada casar, ou se houver
-   empate, a saída é *"Inconclusivo — encaminhar para avaliação humana"*, nunca um chute.
+O processamento segue quatro etapas:
 
-**Resultado:** os 10 relatos recebem o diagnóstico pretendido. Isso prova pouco, porque
-as frases e o mapa foram escritos pela mesma equipe — é circular. O teste que vale está
-na seção 8 do notebook, com frases que não participaram da construção do mapa. Lá o
-sistema acerta duas, devolve inconclusivo corretamente em duas e **falha em uma**.
+1. Normaliza relato e expressões: remove acentos, converte para minúsculas e limpa
+   pontuação e espaços.
+2. Procura cada expressão como trecho do relato, começando pelas mais longas.
+3. Descarta um termo inteiramente contido em outro trecho já reconhecido. Isso evita
+   somar `falta de ar` ao mesmo trecho de `falta de ar quando deito`.
+4. Soma os pesos por doença e apresenta a mais pontuada. Sem correspondências ou com
+   empate na maior pontuação, retorna `Inconclusivo - encaminhar para avaliação humana`.
 
-### Falha documentada
+**A coluna `confianca` não é uma probabilidade de doença.** Ela contém a pontuação da
+hipótese mais pontuada dividida pela soma de todas as pontuações. Um valor de 100% pode
+resultar de uma única expressão associada a uma única condição no mapa.
 
-A frase *"Meu coracao fica acelerado e sinto falta de ar quando subo a escada"* não casou
-com o termo `coração acelerado`, porque a palavra "fica" está no meio e a busca por
-trecho exige as palavras coladas. O sinal de arritmia se perdeu e o sistema respondeu
-Angina com 60% de confiança.
+### Resultados e testes adicionais
 
-Não é erro de digitação: é o limite do método. Está registrado no notebook em vez de
-corrigido com uma frase de teste mais conveniente.
+Os 10 relatos geram sugestões, sem resultados inconclusivos. Como frases e mapa foram
+construídos pela mesma equipe, sem gabarito clínico independente, isso demonstra
+funcionamento, não acurácia diagnóstica validada.
 
----
+A seção 8 do notebook contém **quatro testes adicionais**:
 
-## Parte 2 — Classificador de risco
-
-**Base:** `dados/frases_risco.csv` — 80 frases (40 alto risco, 40 baixo risco) em 40
-grupos semânticos. Colunas: `frase | situacao | grupo_semantico`.
-
-A base foi construída com **sobreposição de vocabulário entre as classes**, de propósito.
-Se "peito" só aparecesse em alto risco, o classificador seria um `Ctrl+F` e a acurácia
-alta não significaria nada:
-
-| termo | alto risco | baixo risco |
+| Caso | Saída observada | Interpretação |
 |---|---|---|
-| peito | 14 | 6 |
-| coração | 3 | 4 |
-| falta de ar | 2 | 1 |
-| inchado | 1 | 1 |
-| dor de cabeça | 1 | 1 |
+| Tornozelo torcido ao jogar bola | Inconclusivo | Nenhuma expressão encontrada |
+| Coração fica acelerado, falta de ar e subida de escada | Angina, proporção de pontuação de 60% | Não reconhece a variante `coração fica acelerado` |
+| Dor de garganta e febre | Inconclusivo | Nenhuma expressão encontrada |
+| Peso no peito e suor frio | Infarto Agudo do Miocárdio, proporção de pontuação de 100% | Correspondência com as regras; não confirma a doença |
 
-A distinção depende do contexto — esforço, duração, se alivia — e não da palavra isolada.
+O segundo teste expõe uma falha de extração: a palavra intermediária `fica` impede a
+correspondência com `coração acelerado`. Ele não estabelece o diagnóstico clínico correto.
 
-**Pipeline:** TF-IDF (unigramas e bigramas, com a mesma normalização da Parte 1) →
-classificador. O TF-IDF fica dentro de um `Pipeline` do scikit-learn para ser ajustado
-apenas com os dados de treino de cada divisão; ajustá-lo na base inteira antes de dividir
-vazaria o vocabulário do teste.
+### Limitações da extração
+
+- Não interpreta negação, hipótese, tempo do evento ou quem apresenta o sintoma.
+  `Não sinto dor no peito` ainda corresponde a `dor no peito`.
+- Expressões genéricas, como `subo a escada` e `respiro fundo`, podem gerar pontuação
+  mesmo sem relato de desconforto.
+- A regra de sobreposição não elimina sinônimos em trechos distintos: `dor no peito`
+  e `dor torácica` podem ser contados separadamente no mesmo relato.
+- Variantes como `palpitações` podem não ser reconhecidas.
+- Um relato de condição fora das sete categorias pode receber uma sugestão incorreta
+  se contiver uma expressão do mapa. Estar fora da cobertura não garante saída inconclusiva.
+
+## Parte 2 — Classificação de risco
+
+### Dados, representação e divisão
+
+A base possui **80 frases sintéticas**, 40 de alto risco e 40 de baixo risco, em
+**40 grupos semânticos**. As colunas são `frase`, `situacao` e `grupo_semantico`.
+Há vocabulário compartilhado entre as classes; uma palavra como `peito` não determina
+sozinha o rótulo atribuído pela equipe.
+
+O texto é convertido em atributos por TF-IDF com unigramas, bigramas e a normalização
+da Parte 1. Regressão logística e árvore de decisão são avaliadas em pipelines que
+ajustam o TF-IDF somente nos dados de treinamento de cada divisão.
+
+A avaliação principal usa `StratifiedGroupKFold`, mantendo cada grupo inteiro em um
+único lado da divisão e buscando preservar a proporção das classes. Isso reduz o risco
+de testar o modelo sobre variações muito próximas das frases usadas no treinamento.
 
 ### Resultados
 
-| modelo | split único | validação cruzada (5 folds, por grupo) |
-|---|---|---|
-| Regressão Logística | 90,0% | **77,5% ± 5,0%** |
-| Árvore de Decisão | 70,0% | 63,7% ± 8,3% |
-| Baseline por palavra-chave | 60,0% | — |
+| Modelo | Acurácia no teste isolado | Acurácia média na validação cruzada por grupo |
+|---|---:|---:|
+| Regressão logística | 90,0% | 77,5% ± 5,0 pontos percentuais |
+| Árvore de decisão | 70,0% | 63,75% ± 8,29 pontos percentuais |
+| Regra por palavras-chave | 60,0% | Não calculada no notebook |
 
-**O número de referência é 77,5%, não 90%.** O split único usa 20 frases de teste; trocar
-a semente aleatória muda o resultado em vários pontos. O baseline burro — chutar alto
-risco se a frase contém "peito", "coração", "falta de ar" ou "braço" — acerta 60%, então
-o ganho real do modelo treinado é de cerca de 17 pontos.
+O teste isolado usa 60 frases para treinamento e 20 para teste. A validação cruzada
+avalia cinco divisões da base. O valor após `±` é o desvio-padrão das acurácias entre
+divisões, não um intervalo de confiança.
 
-**Matriz de confusão (Regressão Logística, split único):**
+**Comparação equivalente:** no teste isolado, a regressão logística supera a regra por
+palavras-chave em **30 pontos percentuais** (90% menos 60%). Não se deve comparar os
+60% desse teste diretamente com os 77,5% da validação cruzada. Para isso, a regra precisa
+ser avaliada nas mesmas divisões dos modelos.
 
-| real \ previsto | alto risco | baixo risco |
-|---|---|---|
-| **alto risco** | 10 | 0 |
-| **baixo risco** | 2 | 8 |
+### Matriz de confusão do teste isolado
 
-Zero falsos negativos e dois falsos positivos. Em triagem é a direção tolerável do erro:
-melhor chamar um paciente leve do que deixar um grave na fila. Mas isso não foi projetado
-— é resultado desta divisão específica, e com 20 frases de teste nenhuma conclusão sobre
-tipo de erro é estável.
+| Rótulo da base / Previsão | Alto risco | Baixo risco |
+|---|---:|---:|
+| Alto risco | 10 | 0 |
+| Baixo risco | 2 | 8 |
 
----
+Houve zero falsos negativos e dois falsos positivos **nessa divisão**. Isso não garante
+o mesmo comportamento em outras divisões ou em novos dados.
 
-## Três achados que mudam a leitura do resultado
+### Avaliação agregada das cinco divisões
 
-Documentados com evidência nos notebooks, não como ressalva genérica.
+Uma verificação complementar reuniu as previsões de teste das 80 frases, usando a mesma
+regressão logística e as mesmas divisões por grupo do notebook. Cada frase foi avaliada
+por um modelo treinado sem o seu grupo.
 
-**1. Parte da acurácia vem de estilo de escrita, não de medicina.** Inspecionando os
-coeficientes da Regressão Logística, os termos de maior peso para baixo risco são
-`quando`, `depois`, `da`, `um` — palavras sem conteúdo clínico. Como as 40 frases de cada
-classe saíram das mesmas pessoas, cada classe ganhou uma estrutura própria (as de baixo
-risco tendem a ser condicionais: *"dói quando eu aperto"*), e o modelo usou esse padrão
-de redação como atalho.
+| Rótulo da base / Previsão | Alto risco | Baixo risco |
+|---|---:|---:|
+| Alto risco | 30 | 10 |
+| Baixo risco | 8 | 32 |
 
-**2. O modelo tratou "não" como sinal de gravidade.** O termo `nao` tem peso forte para
-alto risco, aprendido de *"não consigo respirar"*. Funcionou por acaso. Em *"não sinto dor
-no peito"*, esse mesmo peso levaria à conclusão oposta à correta — é a limitação de
-negação do TF-IDF, com evidência.
+A acurácia foi de **77,5%**. Para alto risco, a sensibilidade foi de **75%** (30/40),
+a precisão de **78,9%** (30/38) e o F1 de **76,9%**. Houve **10 falsos negativos e
+8 falsos positivos**, tomando os rótulos sintéticos da equipe como referência.
 
-**3. As probabilidades são fracas.** Testando com frases novas, *"nao consigo respirar e
-meus labios estao roxos"* — cianose com dificuldade respiratória — recebeu apenas **64%**
-de alto risco. Todas as previsões ficaram entre 35% e 65%. Um corte de 70% para acionar
-atendimento prioritário deixaria esse paciente de fora.
+Essa matriz complementar ainda não é exportada pelo notebook ou pelo CSV de métricas.
+Para reproduzi-la, execute após a seção de validação cruzada do notebook 02:
 
----
+```python
+from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import confusion_matrix, classification_report
 
-## Governança, ética e viés
+pred_cv = cross_val_predict(
+    montar_pipeline(
+        LogisticRegression(
+            max_iter=1000, class_weight="balanced", random_state=42
+        )
+    ),
+    X, y, groups=grupos, cv=cv_grupo,
+)
 
-Detalhamento em [`docs/GOVERNANCA_FASE2.md`](docs/GOVERNANCA_FASE2.md). Em resumo:
+ordem = ["alto risco", "baixo risco"]
+print(pd.DataFrame(
+    confusion_matrix(y, pred_cv, labels=ordem),
+    index=pd.Index(ordem, name="rotulo"),
+    columns=pd.Index(ordem, name="previsao"),
+))
+print(classification_report(y, pred_cv, labels=ordem, digits=3))
+```
 
-- **Origem dos dados.** As 10 frases de paciente e as 80 frases rotuladas são
-  **sintéticas**, escritas pela equipe. Nenhuma vem de prontuário, paciente real ou base
-  pública. O vocabulário clínico se apoia nos textos do SciELO da Fase 1, com a coluna
-  `origem` registrando o que tem respaldo e o que é síntese nossa.
-- **Qualidade dos rótulos.** "Alto risco" e "baixo risco" foram atribuídos pela equipe a
-  partir de sinais de alarme clássicos, sem revisão clínica. Um modelo nunca fica melhor
-  que o próprio gabarito.
-- **Ponto mais frágil do mapa.** O `texto_01_hipertensao_scielo` trata hipertensão como
-  condição frequentemente assintomática e não lista cefaleia, tontura ou visão embaçada.
-  Quase todas as linhas de Hipertensão estão marcadas como `conhecimento_geral_equipe`.
-- **Viés de linguagem.** Ver achado 1 acima. A consequência real é que quem escreve fora
-  do padrão da equipe — pouca escolaridade, outro regionalismo, idade avançada, erro de
-  digitação — seria classificado pelo jeito de escrever em vez de pelo que sente. O erro
-  cairia sobre quem já tem menos acesso a saúde.
-- **Privacidade.** Como não há dado real de paciente, não há dado pessoal sensível no
-  repositório. Isso é consequência de a base ser sintética, não uma proteção implementada.
-- **Segurança clínica.** O sistema devolve "inconclusivo" em vez de chutar, e o texto de
-  saída encaminha para avaliação humana.
+### Comparação entre divisões por grupo e por frase
 
----
+O notebook também avalia a regressão logística dividindo por frase, como comparação:
 
-## Limitações
+| Divisão | Acurácia média |
+|---|---:|
+| Por grupo semântico | 77,50% |
+| Por frase | 83,75% |
+| Diferença observada | 6,25 pontos percentuais |
 
-1. O sistema da Parte 1 não entende a frase, só procura pedaços de texto. Negação, ironia
-   e hipótese passam batido.
-2. Palavra intrusa quebra o casamento de sintoma (ver falha documentada).
-3. Os pesos do mapa são opinião da equipe, não estatística calibrada.
-4. Cobertura de 7 condições. Fora disso, inconclusivo.
-5. Base de 80 frases com mais de mil termos no TF-IDF: muito mais coluna que linha, com
-   espaço de sobra para o modelo decorar.
-6. As probabilidades não foram calibradas e não servem para definir limiar clínico.
-7. Nenhuma etapa foi revisada por profissional de saúde.
+O resultado por frase é mais otimista nesta base. É compatível com o risco de
+compartilhar variações semelhantes entre treino e teste, mas a diferença isolada não
+mede uma contribuição causal exclusiva de vazamento. As estratégias também alteram
+a dificuldade e a composição dos conjuntos de avaliação.
 
-**Conclusão honesta:** este projeto demonstra o mecanismo de um triador automático. Ele
-não é um triador. Usar isso com paciente real, sem base clínica, sem rótulo validado e
-sem auditoria de viés, causaria dano.
+## Interpretação, vieses e governança
+
+O documento [GOVERNANCA_FASE2.md](docs/GOVERNANCA_FASE2.md) registra a discussão da
+equipe. A interpretação dos resultados exige as seguintes distinções:
+
+- **Estilo de escrita:** termos como `quando`, `depois`, `da` e `um` favorecem baixo
+  risco. Isso sugere sensibilidade a padrões de redação, mas os coeficientes sozinhos
+  não quantificam quanto da acurácia decorre desses padrões.
+- **Sinal dos coeficientes:** a ordem observada é `['alto risco', 'baixo risco']`.
+  Coeficientes positivos favorecem baixo risco; negativos favorecem alto risco.
+  As listagens de termos do código usam essa interpretação. A frase introdutória da
+  seção 11 do notebook 02 apresenta o sentido invertido e precisa de revisão.
+- **Negação:** `nao` contribui para alto risco no modelo treinado, mas a decisão combina
+  todos os atributos. Seu coeficiente não determina sozinho a previsão de uma frase.
+  Bigramas capturam algumas combinações, sem garantir interpretação geral de negação.
+- **Probabilidades:** nos seis exemplos novos, as estimativas de alto risco ficaram
+  entre aproximadamente 35% e 64,3%. A faixa, sozinha, não comprova descalibração.
+  A calibração não foi avaliada e as estimativas não representam risco clínico validado.
+- **Representatividade:** os relatos foram escritos pela equipe. Não há avaliação
+  externa nem dados estruturados de subgrupos para medir diferenças por idade, região
+  ou escolaridade. Desvantagens para esses grupos são riscos a investigar, não
+  resultados demonstrados pelo experimento.
+- **Rótulos e pesos:** foram definidos pela equipe, sem revisão clínica. A avaliação
+  mede concordância com esses rótulos, cuja qualidade limita as conclusões.
+- **Privacidade:** as bases de relatos não contêm dados de pacientes reais. Isso não
+  constitui uma implementação de controles de proteção de dados para uso clínico.
+- **Generalização:** a base é pequena e o vocabulário é amplo. Há risco de sobreajuste,
+  mas a diferença entre o teste isolado e a validação cruzada não o comprova sozinha.
+
+## Melhorias propostas
+
+1. Revisar expressões genéricas e exigir contexto que indique um sintoma.
+2. Tratar negação, sujeito do relato e variantes de expressão.
+3. Agrupar sinônimos por conceito para evitar pontuação duplicada e permitir que um
+   mesmo sintoma contribua para mais de uma hipótese.
+4. Relacionar cada associação à referência e ao trecho que a sustenta, mantendo os
+   pesos identificados como regras didáticas.
+5. Exportar métricas por classe e a matriz agregada da validação cruzada; avaliar a
+   regra por palavras-chave nas mesmas divisões dos modelos.
+6. Revisar os textos dos notebooks e de governança conforme as distinções metodológicas
+   descritas neste README e completar os materiais do vídeo.
+
+Essas melhorias são propostas para versões futuras. A implementação atual mantém as
+limitações de extração e classificação descritas acima.
