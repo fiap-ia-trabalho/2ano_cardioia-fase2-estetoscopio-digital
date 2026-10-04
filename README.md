@@ -1,3 +1,7 @@
+# FIAP - Faculdade de Informática e Administração Paulista
+
+<img width="2385" height="642" alt="image" src="https://github.com/user-attachments/assets/594c28cc-66ae-40ac-b8a6-8c39e6f14de4" />
+
 # CardioIA — Fase 2: Diagnóstico Automatizado (IA no Estetoscópio Digital)
 
 Protótipo acadêmico que analisa relatos de sintomas por dois métodos: extração de
@@ -10,17 +14,16 @@ Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 > não foram validadas clinicamente. As saídas demonstram o funcionamento dos métodos e
 > não devem ser utilizadas para diagnóstico ou triagem de pacientes.
 
-## Grupo
+## 👨‍🎓 Integrantes
+- [CAUAN OTTO RODRIGUES SOUSA (RM567940)](https://www.linkedin.com/in/cauanotto)
+- [FERNANDO A GURGEL (RM567606)](https://www.linkedin.com/in/fernando-gurgel-75aa8369)
+- [IRACI MONTEIRO SOUZA (RM567544)](https://www.linkedin.com/in/iraci-souza-bab42034)
+- [MARIA LUISA RODRIGUES NASCIMENTO (RM567659)](https://www.linkedin.com/in/malu-rodrigues-bb756b271)
+- [RAFAELA TORRES MARTINS (RM567735)](https://www.linkedin.com/in/rafaela-torres222)
 
-| Integrante | RM |
-|---|---|
-| Cauan Otto Rodrigues Sousa | RM567940 |
-| Fernando A. Gurgel | RM567606 |
-| Iraci Monteiro Souza | RM567544 |
-| Maria Luisa Rodrigues Nascimento | RM567659 |
-| Rafaela Torres Martins | RM567735 |
 
-**Tutor:** Leonardo Ruiz Orabona · **Coordenador:** André Godoi
+- **Tutor(a):** Leonardo Ruiz Orabona · 
+- **Coordenador(a):** [ANDRÉ GODOI](https://www.linkedin.com/in/andregodoichiovato)
 
 ## Entregáveis e organização
 
