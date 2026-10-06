@@ -121,6 +121,14 @@ Repositório anterior: [Batimentos de Dados](https://github.com/fiap-ia-trabalho
   O classificador recebe frases sintéticas, sem integração com as variáveis tabulares.
 - **Base de imagens:** não foi utilizada, pois os métodos implementados trabalham com texto.
 
+## Ir Além 1 — Portal de atendimento
+
+O desafio adicional está no repositório público
+[CardioIA Portal](https://github.com/fiap-ia-trabalho/fiap-ia-trabalho-cardioia-portal).
+Ele contém a interface React com login simulado, pacientes, agendamentos e dashboard,
+com instruções de execução e roteiro para seu próprio vídeo de demonstração.
+O portal usa dados fictícios e não integra os modelos de texto desta entrega.
+
 ## Parte 1 — Extração de sintomas
 
 ### Dados e método
