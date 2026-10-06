@@ -1,182 +1,130 @@
-# Governança, Ética e Viés — CardioIA Fase 2
+# Governança, ética e limitações - CardioIA Fase 2
 
-Documento complementar ao README. Segue a estrutura do `FONTES_E_GOVERNANCA.md` da Fase 1
-e registra proveniência, limitações e riscos desta entrega.
+Este documento registra a origem dos dados, as observações do experimento e os
+riscos que ainda precisam de investigação. O projeto tem finalidade acadêmica.
 
----
+## 1. Origem dos dados
 
-## 1. Proveniência dos dados
+Os dez relatos e as 80 frases de risco são sintéticos, escritos pela equipe.
+Não há prontuários, consultas ou relatos de pacientes reais. Os rótulos foram
+atribuídos pelos estudantes, sem revisão clínica. A acurácia mede concordância
+com esses rótulos, cuja qualidade limita a interpretação dos resultados.
 
-### 1.1 Relatos de pacientes (`dados/frases_pacientes.txt`)
+Cada um dos dez relatos inclui sintomas, início e impacto na rotina. A base de
+risco tem 40 frases por classe e 40 grupos semânticos.
 
-**Natureza: sintética.** As 10 frases foram escritas pela equipe. Não há paciente real,
-prontuário, transcrição de consulta ou base pública por trás delas.
+### Mapa de conhecimento e continuidade com a Fase 1
 
-Critério de construção: cada frase contém o que a pessoa sente, quando começou e como
-afeta a rotina, conforme o enunciado. Variamos o registro de propósito — três frases sem
-acentuação e uma parcialmente em caixa alta — para exercitar a normalização.
+O mapa contém 48 linhas, 96 expressões e sete condições. Os pesos de 1 a 3 são
+regras didáticas da equipe, sem calibração clínica. A coluna `origem` registra:
 
-**Implicação:** frases escritas por quem conhece a resposta são mais limpas e mais
-informativas do que relatos reais. Um relato de verdade é confuso, incompleto e
-frequentemente contraditório.
+| Origem declarada | Linhas | Referência |
+|---|---:|---|
+| `texto_02_sindrome_coronariana_scielo` | 15 | [Corpus de síndrome coronariana da Fase 1](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase1-batimentos-de-dados/blob/main/docs/textos/texto_02_sindrome_coronariana_scielo.txt) |
+| `texto_01_hipertensao_scielo` | 1 | [Corpus de hipertensão da Fase 1](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase1-batimentos-de-dados/blob/main/docs/textos/texto_01_hipertensao_scielo.txt) |
+| `conhecimento_geral_equipe` | 32 | Associações elaboradas pela equipe |
 
-### 1.2 Mapa de conhecimento (`dados/mapa_conhecimento.csv`)
+Os corpora são textos acadêmicos autorais e parafraseados, preparados a partir de
+publicações identificadas pelos DOI `10.36660/abc.20201238` e
+`10.36660/abc.20250619`. Não são a íntegra das diretrizes. A origem declarada de uma
+expressão não comprova a associação a uma doença nem valida o peso atribuído.
 
-48 linhas (96 expressões, duas por linha), 7 condições, com coluna `origem` indicando a
-procedência de cada termo:
+O corpus de hipertensão não lista cefaleia, tontura ou visão embaçada como sintomas.
+Quase todas as associações de Hipertensão do mapa são marcadas como
+`conhecimento_geral_equipe` e precisam de revisão fundamentada em referências.
 
-| origem | significado |
-|---|---|
-| `texto_02_sindrome_coronariana_scielo` | termo presente no corpus de síndrome coronariana da Fase 1 |
-| `texto_01_hipertensao_scielo` | termo presente no corpus de hipertensão da Fase 1 |
-| `conhecimento_geral_equipe` | termo escrito pela equipe, sem respaldo direto nesses corpora |
+O enunciado apresenta `falta de ar` associada a Angina como exemplo. Nesta solução,
+a expressão foi associada a Insuficiência Cardíaca. É uma escolha didática sem
+validação clínica: a expressão isolada não distingue doenças. A regra não deve
+ser apresentada como uma correção médica do enunciado.
 
-Os corpora da Fase 1 derivam de diretrizes brasileiras publicadas no SciELO
-(DOI 10.36660/abc.20201238 e DOI 10.36660/abc.20250619), sob licença Creative Commons
-Attribution. Nenhum trecho foi reproduzido literalmente nesta fase — usamos apenas
-terminologia.
+A base numérica e as imagens da Fase 1 não entram nos métodos de texto desta entrega.
 
-**Ponto mais frágil, registrado explicitamente.** Ao conferir o
-`texto_01_hipertensao_scielo`, verificamos que ele trata hipertensão como condição
-frequentemente assintomática e **não** lista cefaleia, tontura, visão embaçada ou zumbido.
-Portanto quase todas as linhas de Hipertensão do nosso mapa estão marcadas como
-`conhecimento_geral_equipe`. Seria trivial escrever `texto_01` nessas linhas e ninguém
-verificaria. Não fizemos isso.
+## 2. Divisão dos dados e prevenção de vazamento
 
-**Divergência consciente do enunciado.** O enunciado sugere como exemplo
-`"falta de ar", "dificuldade para respirar" → Angina`. Mapeamos esses termos para
-Insuficiência Cardíaca. Dispneia é sinal de congestão; angina se define por dor ao esforço
-que alivia em repouso. A divergência é deliberada e está documentada.
+Variações da mesma ideia pertencem ao mesmo `grupo_semantico`. A divisão por
+`StratifiedGroupKFold` mantém cada grupo inteiro em um único lado e busca preservar
+a proporção das classes. O notebook verifica a ausência de grupos compartilhados
+entre treino e teste. O TF-IDF é ajustado em um `Pipeline`, somente sobre o treino.
 
-### 1.3 Base rotulada de risco (`dados/frases_risco.csv`)
+| Estratégia | Acurácia média da regressão logística em cinco divisões |
+|---|---:|
+| Por grupo semântico, avaliação principal | 77,50% |
+| Por frase, comparação | 83,75% |
+| Diferença observada | 6,25 pontos percentuais |
 
-**Natureza: sintética.** 80 frases escritas pela equipe, 40 por classe, em 40 grupos
-semânticos.
+A divisão por frase é mais otimista nesta base. A diferença é compatível com o
+risco de compartilhar variações semelhantes, mas não mede uma contribuição causal
+exclusiva de vazamento: os conjuntos de teste também mudam.
 
-Os rótulos foram atribuídos pela equipe com base em sinais de alarme clássicos: dor
-torácica em repouso ou prolongada, irradiação, início súbito, déficit neurológico,
-síncope, cianose, dispneia sem esforço. **Nenhum rótulo foi revisado por profissional de
-saúde.** Alguns casos são discutíveis — classificamos crise hipertensiva com cefaleia
-como alto risco, mas um triador experiente poderia decidir diferente conforme o serviço.
+Referência: [StratifiedGroupKFold no scikit-learn](https://scikit-learn.org/1.8/modules/generated/sklearn.model_selection.StratifiedGroupKFold.html).
 
-Um modelo nunca fica melhor que o próprio gabarito. Este gabarito é frágil.
+## 3. Resultados e limites da interpretação
 
----
+O teste isolado teve acurácia de 90%, dois falsos positivos e nenhum falso negativo
+em 20 frases. Nas previsões agregadas das 80 frases, cada uma avaliada sem seu grupo
+no treino, houve **dez falsos negativos e oito falsos positivos**, com acurácia de
+**77,5%**. Para alto risco, a sensibilidade foi de 75%. O zero do teste isolado não
+se mantém na avaliação completa.
 
-## 2. Vazamento de dados
+A regra por palavras-chave foi avaliada nas mesmas cinco divisões: média de 58,75%.
+O desvio-padrão entre divisões não é um intervalo de confiança. Os números são
+exportados em `resultado_classificador.csv` e `metricas_cv_agregada.csv`.
 
-Quando amostras derivadas da mesma origem são distribuídas ao acaso entre treino e teste,
-o modelo é avaliado sobre material que ele praticamente já viu. A acurácia sobe sem
-ganho real de generalização. Em bases pequenas e construídas por variação, como esta, o
-risco é alto.
+### Estilo de escrita e sinal dos coeficientes
 
-**Controle adotado.** A coluna `grupo_semantico` agrupa frases que são variações da
-mesma ideia clínica. A divisão treino/teste usa `StratifiedGroupKFold`, que mantém grupos
-inteiros de um lado só e equilibra as classes. O notebook 02 tem uma verificação com
-`assert` que falha se algum grupo aparecer nos dois lados.
+Termos como `quando`, `depois`, `da` e `um` favorecem baixo risco. Isso sugere
+sensibilidade à redação, mas não quantifica quanto da acurácia depende do estilo.
+Não medimos diferenças por idade, região ou escolaridade.
 
-**Efeito medido:**
+As classes observadas são `['alto risco', 'baixo risco']`. No modelo binário,
+coeficientes positivos favorecem a segunda classe, baixo risco; negativos favorecem
+alto risco. A previsão combina todos os atributos.
 
-| divisão | acurácia média (5 folds) |
-|---|---|
-| por grupo | 77,5% |
-| por frase | 83,8% |
-| inflação | +6,2 pontos percentuais |
+Referência: [LogisticRegression no scikit-learn](https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html).
 
-O TF-IDF também é ajustado dentro de um `Pipeline`, para que o vocabulário do conjunto de
-teste não vaze para o treino durante a validação cruzada.
+### Negação, contexto e cobertura
 
----
+A extração por trecho não trata negação, hipótese, tempo ou sujeito. `Não sinto
+dor no peito` ainda corresponde a `dor no peito`. Termos genéricos como `subo a
+escada` podem somar pontos sem desconforto. Uma palavra intermediária impede
+reconhecer `coração fica acelerado` como `coração acelerado`.
 
-## 3. Vieses identificados
+Na classificação, bigramas capturam combinações locais, sem garantir interpretação
+geral de negação. O coeficiente de `nao` não determina sozinho a previsão.
 
-### 3.1 Viés de linguagem (o mais grave)
+Um relato fora das sete condições pode receber uma sugestão inadequada se contiver
+termos do mapa. A saída inconclusiva ocorre sem correspondências ou com empate;
+não garante a detecção de todos os casos fora do domínio.
 
-Inspecionando os coeficientes da Regressão Logística, os termos de maior peso para a
-classe de baixo risco são `quando`, `depois`, `da`, `um`, `um pouco` — palavras sem
-conteúdo clínico.
+### Generalização, calibração e representatividade
 
-Causa: as 40 frases de cada classe foram escritas pelas mesmas pessoas. Cada classe
-acabou com uma estrutura de redação própria, e o modelo encontrou esse padrão antes de
-encontrar o sintoma.
+A base é pequena e sintética, sem avaliação externa. Há risco de sobreajuste,
+mas a diferença entre o teste isolado e a validação cruzada não o comprova sozinha.
 
-Consequência real, se o sistema fosse usado: pessoas que escrevem fora desse padrão —
-baixa escolaridade, regionalismo diferente, idade avançada, erros de digitação, uso de
-áudio transcrito — seriam classificadas pelo jeito de escrever em vez de pelo que sentem.
-O erro recairia sobre quem já tem menos acesso a serviços de saúde.
+As estimativas de `predict_proba` nos seis exemplos novos não representam risco
+clínico. A calibração não foi avaliada e nenhum limiar de atendimento foi definido.
 
-Mitigação necessária (fora do escopo desta fase): frases coletadas de pessoas diferentes,
-com escolaridades e regiões diferentes, e auditoria de desempenho por subgrupo.
+Não há dados estruturados de subgrupos para medir diferenças entre populações.
+Diversificar autores e contextos, revisar rótulos e avaliar paráfrases são etapas
+futuras para investigar os riscos de viés.
 
-### 3.2 Viés de negação
+## 4. Privacidade e uso acadêmico
 
-O termo `nao` recebeu peso forte para alto risco, aprendido de construções como "não
-consigo respirar". Funcionou por coincidência nesta base. Em "não sinto dor no peito", o
-mesmo peso empurraria para a conclusão oposta à correta.
+Os dados de sintomas não descrevem pacientes reais. Isso não equivale à implementação
+de controles de proteção de dados para um sistema com dados reais.
 
-TF-IDF não modela negação. Resolver exigiria modelos sensíveis a contexto.
+O aviso de uso acadêmico aparece no README, no script e nos notebooks. Nenhum método
+foi validado para diagnóstico ou triagem clínica. A pontuação da extração é didática,
+e o campo `confianca` não é probabilidade de doença.
 
-### 3.3 Viés de representatividade clínica
+## 5. Referências e licenças declaradas
 
-Sete condições, todas cardiovasculares ou neurovasculares, e em apresentações típicas.
-Apresentações atípicas — comuns em mulheres, idosos e pessoas com diabetes, que podem ter
-infarto sem dor torácica clássica — estão sub-representadas. Incluímos um caso de dor
-epigástrica atípica, mas um caso não corrige a distribuição.
+O [registro de fontes da Fase 1](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase1-batimentos-de-dados/blob/main/FONTES_E_GOVERNANCA.md)
+identifica as publicações textuais sob Creative Commons Attribution e registra
+a licença da base numérica do Kaggle como `Unknown`. Essa base numérica não é
+utilizada aqui. A declaração da Fase 1 não amplia permissões de uso.
 
-### 3.4 Ausência de dados demográficos
-
-As frases não trazem idade, sexo, região ou escolaridade. Isso impede qualquer auditoria
-de desempenho por subgrupo — não conseguimos verificar se o modelo funciona pior para
-algum recorte da população. A ausência de dado demográfico não é neutralidade; é
-impossibilidade de fiscalizar.
-
----
-
-## 4. Privacidade
-
-Não há dado pessoal no repositório, porque não há paciente real. Isso é consequência de a
-base ser sintética, não uma medida de proteção que tenhamos implementado. Um sistema
-equivalente com dados reais exigiria base legal, consentimento, minimização, controle de
-acesso e registro de tratamento conforme a LGPD — nada disso foi construído aqui.
-
----
-
-## 5. Segurança clínica
-
-Decisões tomadas para reduzir o risco de uso indevido:
-
-- a Parte 1 devolve **"Inconclusivo — encaminhar para avaliação humana"** quando nenhum
-  sintoma casa ou quando há empate, em vez de escolher a doença mais provável;
-- a saída do script traz aviso explícito de que não substitui avaliação médica;
-- README e notebooks afirmam que o projeto é acadêmico e que a base é sintética;
-- não publicamos limiar de decisão recomendado, porque as probabilidades não foram
-  calibradas.
-
-O que **não** foi feito, e seria obrigatório num sistema real: validação clínica
-prospectiva, registro como dispositivo médico quando aplicável, monitoramento contínuo de
-desempenho, canal de contestação para o paciente e responsabilidade humana definida para
-cada decisão automatizada.
-
----
-
-## 6. Licenças
-
-- Corpora textuais da Fase 1: derivados de publicações SciELO sob Creative Commons
-  Attribution. Uso acadêmico, com atribuição.
-- Frases e mapa de conhecimento desta fase: produção própria da equipe.
-- Base numérica da Fase 1 (Kaggle): licença registrada como *Unknown*. **Não utilizada
-  nesta fase.** A indefinição de licença exige cautela em qualquer uso além do contexto
-  estritamente acadêmico.
-
----
-
-## 7. Resumo do que impede este projeto de ser usado de verdade
-
-1. Base sintética, sem paciente real.
-2. Rótulos sem validação clínica.
-3. Viés de linguagem medido e não corrigido.
-4. Probabilidades não calibradas.
-5. Sem dados demográficos, logo sem auditoria por subgrupo possível.
-6. Sem responsabilidade humana definida no fluxo.
-
-Qualquer um dos seis, isoladamente, já bastaria.
+As frases e regras de associação desta fase são da equipe. As fontes devem ser
+citadas ao explicar a continuidade do projeto, sem apresentar a terminologia como
+validação das regras didáticas.

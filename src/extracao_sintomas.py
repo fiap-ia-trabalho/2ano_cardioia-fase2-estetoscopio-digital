@@ -8,7 +8,7 @@ Lê:
 
 Escreve:
   dados/resultado_extracao.csv -> uma linha por relato, com sintomas achados,
-                                  diagnóstico sugerido e nível de confiança
+                                  diagnóstico sugerido e proporção da pontuação
 
 Dependências: pandas + biblioteca padrão do Python.
 
@@ -77,9 +77,9 @@ def carregar_mapa(caminho=ARQ_MAPA):
     para a mesma doença. Nós "achatamos" isso: cada expressão vira um termo
     independente, já normalizado, carregando a doença, o peso e a origem.
 
-    O peso (1 a 3) existe porque nem todo sintoma vale o mesmo. "Dor no peito"
-    é inespecífica (peso 2); "irradiou para o braço esquerdo" é muito mais
-    sugestiva de infarto (peso 3).
+    O peso (1 a 3) é uma regra didática definida pela equipe. Por exemplo,
+    "dor no peito" recebe peso 2 e "irradiou para o braço esquerdo" recebe
+    peso 3. Esses valores não foram calibrados nem validados clinicamente.
     """
     mapa = pd.read_csv(caminho)
 
@@ -125,7 +125,7 @@ def extrair_sintomas(relato, termos):
     "falta de ar quando deito" (peso 3) casa primeiro. O termo "falta de ar"
     (peso 2) cairia dentro dele, então é ignorado. Sem essa regra, a
     Insuficiência Cardíaca somaria 5 pontos onde deveria somar 3, e a
-    confiança do sistema ficaria artificialmente inflada.
+    proporção da pontuação poderia mudar pela contagem duplicada.
     """
     relato_norm = normalizar(relato)
     trechos_ocupados = []  # lista de pares (inicio, fim)
@@ -162,7 +162,7 @@ def sugerir_diagnostico(achados):
       placar       -> lista completa (doença, pontos), da maior para a menor
       empate       -> True se duas ou mais doenças empataram na frente
 
-    A "confiança" NÃO é probabilidade. É só a fatia da evidência que aponta
+    A "confiança" NÃO é probabilidade. É só a fatia da pontuação que aponta
     para a doença vencedora. Um valor de 1.0 significa "todos os sintomas
     encontrados apontam para a mesma doença", e não "temos certeza".
     """
@@ -230,7 +230,7 @@ def imprimir_relatorio(df):
         print(f"\n[{linha['id_relato']:02d}] {linha['relato']}")
         print(f"     sintomas    : {linha['sintomas_encontrados'] or '(nenhum)'}")
         print(f"     diagnóstico : {linha['diagnostico_sugerido']}")
-        print(f"     confiança   : {linha['confianca']:.0%}  ({linha['placar_completo']})")
+        print(f"     proporção da pontuação: {linha['confianca']:.0%}  ({linha['placar_completo']})")
 
 
 def main():

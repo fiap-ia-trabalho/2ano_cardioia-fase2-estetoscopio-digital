@@ -22,8 +22,18 @@ Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 - [RAFAELA TORRES MARTINS (RM567735)](https://www.linkedin.com/in/rafaela-torres222)
 
 
-- **Tutor(a):** Leonardo Ruiz Orabona · 
+- **Tutor(a):** Leonardo Ruiz Orabona
 - **Coordenador(a):** [ANDRÉ GODOI](https://www.linkedin.com/in/andregodoichiovato)
+
+## 🎥 Vídeo de demonstração
+
+**Vídeo ainda não publicado.** Após a gravação, incluir aqui o link do YouTube em
+visibilidade **não listado**, conforme o enunciado.
+
+Vídeo de até 4 minutos com a execução completa da solução: leitura dos relatos e do mapa
+de conhecimento, extração de sintomas e sugestão de diagnóstico (Parte 1), e treinamento,
+avaliação e teste do classificador de risco (Parte 2). O roteiro está em
+[docs/roteiro_video.md](docs/roteiro_video.md).
 
 ## Entregáveis e organização
 
@@ -37,31 +47,39 @@ Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 | [dados/frases_risco.csv](dados/frases_risco.csv) | 80 frases rotuladas para classificação de risco |
 | [notebooks/02_classificador_risco.ipynb](notebooks/02_classificador_risco.ipynb) | Treinamento, comparação de modelos e avaliação da Parte 2 |
 | [dados/resultado_classificador.csv](dados/resultado_classificador.csv) | Acurácias e estatísticas de validação cruzada |
+| [dados/metricas_cv_agregada.csv](dados/metricas_cv_agregada.csv) | Matriz de confusão agregada e métricas por classe da validação cruzada |
 | [docs/GOVERNANCA_FASE2.md](docs/GOVERNANCA_FASE2.md) | Proveniência, limitações e discussão de vieses |
 | [requirements.txt](requirements.txt) | Dependências para instalação |
-| [docs/roteiro_video.md](docs/roteiro_video.md) | Arquivo reservado ao roteiro de vídeo, ainda sem conteúdo |
+| [requirements-testadas.txt](requirements-testadas.txt) | Versões dos pacotes usadas na execução de validação |
+| [abrir_notebooks.bat](abrir_notebooks.bat) e [executar_extracao.bat](executar_extracao.bat) | Atalhos de execução no Windows, após preparar o ambiente |
+| [docs/roteiro_video.md](docs/roteiro_video.md) | Roteiro do vídeo de demonstração |
 
 Os notebooks possuem saídas salvas. Para reproduzir o projeto, baixe ou clone o
 repositório completo, mantendo as pastas `dados/`, `src/` e `notebooks/`.
 Os dois notebooks importam funções de `src/extracao_sintomas.py`.
 
-## Vídeo de demonstração
-
-**Status: link ainda não informado.** O roteiro também está pendente de preenchimento.
-O planejamento da equipe prevê um vídeo não listado de até 4 minutos; as exigências de
-formato e duração devem ser conferidas no enunciado completo da atividade.
-
 ## Como executar
 
-O projeto declara Python 3.9 ou superior. As dependências usam versões mínimas em
-`requirements.txt`, portanto as versões instaladas podem variar conforme o Python e a
-data da instalação. A revisão de execução reproduziu os resultados com Python 3.12.14,
-pandas 2.2.3, NumPy 2.3.5 e scikit-learn 1.8.0.
+Use **Python 3.13**, versão usada na validação. `requirements.txt` referencia
+`requirements-testadas.txt`, que fixa os pacotes: NumPy 2.3.5, pandas 2.3.3,
+scikit-learn 1.8.0, JupyterLab 4.5.4 e ipykernel 7.2.0. O Python validado é 3.13.7.
+
+A versão do scikit-learn importa: a 1.8 corrigiu a divisão por grupos com embaralhamento.
+Versões anteriores podem gerar divisões e métricas diferentes com a mesma semente.
+Veja as [notas da versão 1.8](https://scikit-learn.org/1.8/whats_new/v1.8.html#sklearn-model-selection).
 
 ```bash
 git clone https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-estetoscopio-digital.git
 cd 2ano_cardioia-fase2-estetoscopio-digital
+python -m venv .venv
+```
+
+Ative o ambiente: no PowerShell, use `.\.venv\Scripts\Activate.ps1`; no
+macOS/Linux, use `source .venv/bin/activate`. Depois:
+
+```bash
 python -m pip install -r requirements.txt
+python -m ipykernel install --prefix .venv --name cardioia-fase2 --display-name "CardioIA Fase 2 (.venv)"
 ```
 
 Execute a Parte 1 a partir da raiz do projeto:
@@ -76,15 +94,19 @@ O script lê os relatos e o mapa, mostra as sugestões no terminal e grava
 Para executar os notebooks:
 
 ```bash
-jupyter notebook notebooks/
+python -m jupyterlab notebooks/
 ```
 
-Abra cada notebook, reinicie o kernel e execute todas as células em ordem. A Parte 2
-grava `dados/resultado_classificador.csv`. A execução substitui os respectivos CSVs de
+Abra cada notebook, escolha o kernel **CardioIA Fase 2 (.venv)**, reinicie o kernel e
+execute todas as células em ordem. A Parte 2
+grava `dados/resultado_classificador.csv` e `dados/metricas_cv_agregada.csv`. A execução substitui os respectivos CSVs de
 resultados.
 
-O projeto utiliza pandas, scikit-learn e Jupyter. O notebook 02 também importa NumPy,
-instalado como dependência dessas bibliotecas. As matrizes de confusão são tabelas,
+No Windows, após preparar o ambiente, também é possível abrir o JupyterLab com
+um duplo clique em `abrir_notebooks.bat` e executar a Parte 1 com
+`executar_extracao.bat`. Os dois atalhos utilizam o Python da pasta `.venv`.
+
+O projeto utiliza NumPy, pandas, scikit-learn, JupyterLab e ipykernel. As matrizes de confusão são tabelas,
 sem dependência de uma biblioteca de gráficos.
 
 ## Continuidade com a Fase 1
@@ -182,16 +204,17 @@ de testar o modelo sobre variações muito próximas das frases usadas no treina
 |---|---:|---:|
 | Regressão logística | 90,0% | 77,5% ± 5,0 pontos percentuais |
 | Árvore de decisão | 70,0% | 63,75% ± 8,29 pontos percentuais |
-| Regra por palavras-chave | 60,0% | Não calculada no notebook |
+| Regra por palavras-chave | 60,0% | 58,75% ± 23,58 pontos percentuais |
 
 O teste isolado usa 60 frases para treinamento e 20 para teste. A validação cruzada
 avalia cinco divisões da base. O valor após `±` é o desvio-padrão das acurácias entre
 divisões, não um intervalo de confiança.
 
-**Comparação equivalente:** no teste isolado, a regressão logística supera a regra por
-palavras-chave em **30 pontos percentuais** (90% menos 60%). Não se deve comparar os
-60% desse teste diretamente com os 77,5% da validação cruzada. Para isso, a regra precisa
-ser avaliada nas mesmas divisões dos modelos.
+**Comparação equivalente:** a regra por palavras-chave foi avaliada nas mesmas cinco
+divisões por grupo (seção 8.1 do notebook 02). Na média, a regressão logística a supera em
+**18,75 pontos percentuais** (77,5% contra 58,75%); no teste isolado, a diferença é de
+30 pontos (90% contra 60%). O desvio-padrão alto da regra (23,58 pontos, com divisões
+entre 18,75% e 87,5%) mostra que seu acerto depende muito de quais frases caem no teste.
 
 ### Matriz de confusão do teste isolado
 
@@ -205,8 +228,8 @@ o mesmo comportamento em outras divisões ou em novos dados.
 
 ### Avaliação agregada das cinco divisões
 
-Uma verificação complementar reuniu as previsões de teste das 80 frases, usando a mesma
-regressão logística e as mesmas divisões por grupo do notebook. Cada frase foi avaliada
+A seção 8.1 do notebook 02 reúne as previsões de teste das 80 frases, usando a mesma
+regressão logística e as mesmas divisões por grupo da validação cruzada. Cada frase foi avaliada
 por um modelo treinado sem o seu grupo.
 
 | Rótulo da base / Previsão | Alto risco | Baixo risco |
@@ -218,30 +241,7 @@ A acurácia foi de **77,5%**. Para alto risco, a sensibilidade foi de **75%** (3
 a precisão de **78,9%** (30/38) e o F1 de **76,9%**. Houve **10 falsos negativos e
 8 falsos positivos**, tomando os rótulos sintéticos da equipe como referência.
 
-Essa matriz complementar ainda não é exportada pelo notebook ou pelo CSV de métricas.
-Para reproduzi-la, execute após a seção de validação cruzada do notebook 02:
-
-```python
-from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import confusion_matrix, classification_report
-
-pred_cv = cross_val_predict(
-    montar_pipeline(
-        LogisticRegression(
-            max_iter=1000, class_weight="balanced", random_state=42
-        )
-    ),
-    X, y, groups=grupos, cv=cv_grupo,
-)
-
-ordem = ["alto risco", "baixo risco"]
-print(pd.DataFrame(
-    confusion_matrix(y, pred_cv, labels=ordem),
-    index=pd.Index(ordem, name="rotulo"),
-    columns=pd.Index(ordem, name="previsao"),
-))
-print(classification_report(y, pred_cv, labels=ordem, digits=3))
-```
+Esses números são exportados em `dados/metricas_cv_agregada.csv`.
 
 ### Comparação entre divisões por grupo e por frase
 
@@ -268,8 +268,8 @@ equipe. A interpretação dos resultados exige as seguintes distinções:
   não quantificam quanto da acurácia decorre desses padrões.
 - **Sinal dos coeficientes:** a ordem observada é `['alto risco', 'baixo risco']`.
   Coeficientes positivos favorecem baixo risco; negativos favorecem alto risco.
-  As listagens de termos do código usam essa interpretação. A frase introdutória da
-  seção 11 do notebook 02 apresenta o sentido invertido e precisa de revisão.
+  As listagens de termos do código e o texto da seção 11 do notebook 02 usam essa
+  interpretação.
 - **Negação:** `nao` contribui para alto risco no modelo treinado, mas a decisão combina
   todos os atributos. Seu coeficiente não determina sozinho a previsão de uma frase.
   Bigramas capturam algumas combinações, sem garantir interpretação geral de negação.
@@ -295,10 +295,8 @@ equipe. A interpretação dos resultados exige as seguintes distinções:
    mesmo sintoma contribua para mais de uma hipótese.
 4. Relacionar cada associação à referência e ao trecho que a sustenta, mantendo os
    pesos identificados como regras didáticas.
-5. Exportar métricas por classe e a matriz agregada da validação cruzada; avaliar a
-   regra por palavras-chave nas mesmas divisões dos modelos.
-6. Revisar os textos dos notebooks e de governança conforme as distinções metodológicas
-   descritas neste README e completar os materiais do vídeo.
+5. Coletar relatos escritos por pessoas diferentes, com dados de subgrupo, para auditar
+   o viés de estilo de redação e o desempenho por grupo populacional.
 
 Essas melhorias são propostas para versões futuras. A implementação atual mantém as
 limitações de extração e classificação descritas acima.

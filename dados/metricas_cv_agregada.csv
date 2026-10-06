@@ -1,0 +1,3 @@
+classe,precisao,sensibilidade,f1,suporte,previsto_alto_risco,previsto_baixo_risco
+alto risco,0.7895,0.75,0.7692,40,30,10
+baixo risco,0.7619,0.8,0.7805,40,8,32
