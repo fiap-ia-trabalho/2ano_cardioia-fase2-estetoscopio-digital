@@ -258,6 +258,21 @@ compartilhar variações semelhantes entre treino e teste, mas a diferença isol
 mede uma contribuição causal exclusiva de vazamento. As estratégias também alteram
 a dificuldade e a composição dos conjuntos de avaliação.
 
+## Ir Além 2 — Diagnóstico Visual com Rede Neural (MLP)
+
+Como desafio adicional, a equipe implementou um classificador para séries temporais de Eletrocardiogramas (ECG) utilizando Deep Learning no arquivo `notebooks/03_diagnostico_visual.ipynb`.
+
+### Dados e Arquitetura
+- **Dataset:** MIT-BIH Arrhythmia Database (Sinais com 187 features numéricas por batimento). Para reproduzir a execução, é necessário baixar o arquivo `mitbih_train.csv` do Kaggle e colocá-lo na pasta `dados/`.
+- **Pré-processamento:** As 5 classes originais do dataset foram convertidas para classificação binária (`0.0` = Normal; `Qualquer outra classe` = Anormal), mantendo a proporção real por meio de estratificação.
+- **Rede Neural:** Perceptron Multicamadas (MLP) construída com Keras/TensorFlow. Possui 3 camadas densas ocultas (128, 64 e 32 neurônios), intercaladas com `Dropout` (0.3 e 0.2) para mitigar o *overfitting*. A camada de saída utiliza ativação *Sigmoid* com função de perda *binary_crossentropy*.
+
+### Métricas Alcançadas
+- **Acurácia Global:** **97,36%** na base de validação isolada.
+- **Sensibilidade em Anomalias (Recall):** **88%**, garantindo alta taxa de identificação de batimentos patológicos.
+- **Precisão em Anomalias:** **97%**, resultando em uma taxa mínima de falsos positivos (apenas 3%).
+- **F1-Score (Classe Anormal):** **0,92**, demonstrando excelente equilíbrio no tratamento do desbalanceamento natural entre exames saudáveis e patológicos.
+
 ## Interpretação, vieses e governança
 
 O documento [GOVERNANCA_FASE2.md](docs/GOVERNANCA_FASE2.md) registra a discussão da
