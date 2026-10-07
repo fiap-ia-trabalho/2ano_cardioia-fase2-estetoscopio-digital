@@ -35,27 +35,27 @@
   "q_excluidos_teste": 1608,
   "duplicatas_conflitos_excluidos_pool_treino": 0,
   "duplicatas_treino_validacao_excluidas_teste": 0,
-  "acuracia_validacao": 0.9379166960716248,
-  "acuracia_teste": 0.9534115559061329,
-  "precisao_alterado": 0.7203175748827139,
-  "recall_alterado": 0.9215143120960295,
-  "f1_alterado": 0.8085882114644521,
-  "taxa_falsos_positivos": 0.04277514074401148,
-  "fracao_alertas_incorretos": 0.2796824251172862,
+  "acuracia_validacao": 0.9316666722297668,
+  "acuracia_teste": 0.9452770656675212,
+  "precisao_alterado": 0.6786197564276049,
+  "recall_alterado": 0.9261311172668514,
+  "f1_alterado": 0.7832877782116361,
+  "taxa_falsos_positivos": 0.05243404349265923,
+  "fracao_alertas_incorretos": 0.32138024357239514,
   "matriz_confusao_N_SVF": [
     [
-      17343,
-      775
+      17168,
+      950
     ],
     [
-      170,
-      1996
+      160,
+      2006
     ]
   ],
-  "tn": 17343,
-  "fp": 775,
-  "fn": 170,
-  "tp": 1996,
+  "tn": 17168,
+  "fp": 950,
+  "fn": 160,
+  "tp": 2006,
   "acuracia_referencia_sempre_N": 0.8932163281404062,
   "origem": "dados/ecg_origem.json",
   "selecao": "dados/ecg_divisao.csv",

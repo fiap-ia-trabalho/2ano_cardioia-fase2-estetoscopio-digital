@@ -1,35 +1,58 @@
 {
   "semente": 42,
   "pythonhashseed": "0",
+  "sementes_inicializadores": [
+    42,
+    44,
+    46,
+    47
+  ],
+  "sementes_dropout": [
+    43,
+    45
+  ],
   "resultados_identicos": true,
+  "historicos_identicos": true,
   "execucoes": [
     {
-      "acuracia_validacao": 0.9379166960716248,
-      "acuracia_teste": 0.9534115559061329,
+      "modo": "script",
+      "acuracia_validacao": 0.9316666722297668,
+      "acuracia_teste": 0.9452770656675212,
       "matriz_confusao_N_SVF": [
         [
-          17343,
-          775
+          17168,
+          950
         ],
         [
-          170,
-          1996
+          160,
+          2006
         ]
-      ]
+      ],
+      "precisao_alterado": 0.6786197564276049,
+      "recall_alterado": 0.9261311172668514,
+      "f1_alterado": 0.7832877782116361,
+      "taxa_falsos_positivos": 0.05243404349265923,
+      "fracao_alertas_incorretos": 0.32138024357239514
     },
     {
-      "acuracia_validacao": 0.9379166960716248,
-      "acuracia_teste": 0.9534115559061329,
+      "modo": "JupyterLab",
+      "acuracia_validacao": 0.9316666722297668,
+      "acuracia_teste": 0.9452770656675212,
       "matriz_confusao_N_SVF": [
         [
-          17343,
-          775
+          17168,
+          950
         ],
         [
-          170,
-          1996
+          160,
+          2006
         ]
-      ]
+      ],
+      "precisao_alterado": 0.6786197564276049,
+      "recall_alterado": 0.9261311172668514,
+      "f1_alterado": 0.7832877782116361,
+      "taxa_falsos_positivos": 0.05243404349265923,
+      "fracao_alertas_incorretos": 0.32138024357239514
     }
   ]
 }

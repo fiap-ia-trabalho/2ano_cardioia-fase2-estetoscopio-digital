@@ -51,7 +51,10 @@ pela rede. A mesma escala e o mesmo processamento são usados em todos os conjun
 
 A arquitetura, dez épocas e limiar de 0,5 são definidos antes da avaliação final.
 A validação é acompanhada durante o treino; o teste não define esses parâmetros.
-A semente é aplicada ao Keras e ao embaralhamento, e o kernel é iniciado com
+A semente é reiniciada no começo da célula de treino e aplicada ao Keras e ao
+embaralhamento. Os inicializadores GlorotUniform usam sementes 42/44/46/47;
+os Dropouts usam 43/45, isolando sua aleatoriedade da interação com outras
+células. O kernel é iniciado com
 `PYTHONHASHSEED=0`. Registramos as versões e usamos CPU com operações determinísticas.
 Hardware e versões diferentes ainda podem
 alterar os resultados; não prometemos reprodução universal dos mesmos números.
@@ -59,8 +62,8 @@ alterar os resultados; não prometemos reprodução universal dos mesmos número
 O notebook verifica a acurácia da validação contra a última época, salva e
 recarrega o modelo e compara suas previsões. As matrizes, métricas por classe,
 histórico e relatório JSON são gerados pelo mesmo treinamento.
-Em 07/10/2026, duas execuções completas com a configuração final produziram as
-mesmas métricas e matriz de confusão nesta máquina. A comparação está em
+Em 07/10/2026, execuções completas pelo script e pelo JupyterLab produziram
+históricos, métricas e matriz de confusão idênticos nesta máquina. A comparação está em
 `dados/ecg_reproducao.json`; não é uma garantia para outros ambientes.
 
 Tomando S/V/F como positivo:

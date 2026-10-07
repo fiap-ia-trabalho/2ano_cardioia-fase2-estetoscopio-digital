@@ -324,34 +324,35 @@ Para abrir no JupyterLab, use `abrir_ir_alem2.bat` no Windows ou
 
 | Medida | Resultado |
 |---|---:|
-| Acurácia da validação, conferida com a última época | 93,79% |
-| Acurácia do teste separado | **95,34%** |
-| Precisão do grupo S/V/F | 72,03% |
-| Recall do grupo S/V/F | **92,15%** |
-| F1 do grupo S/V/F | 0,8086 |
-| Taxa de falsos positivos entre os N | 4,28% |
-| Fração de alertas incorretos entre as previsões S/V/F | 27,97% |
+| Acurácia da validação, conferida com a última época | 93,17% |
+| Acurácia do teste separado | **94,53%** |
+| Precisão do grupo S/V/F | 67,86% |
+| Recall do grupo S/V/F | **92,61%** |
+| F1 do grupo S/V/F | 0,7833 |
+| Taxa de falsos positivos entre os N | 5,24% |
+| Fração de alertas incorretos entre as previsões S/V/F | 32,14% |
 | Referência que sempre prevê N: acurácia / recall S/V/F | 89,32% / 0% |
 
 | Rótulo da base / Previsão | N | S/V/F |
 |---|---:|---:|
-| N | 17.343 | 775 |
-| S/V/F | 170 | 1.996 |
+| N | 17.168 | 950 |
+| S/V/F | 160 | 2.006 |
 
-Houve **775 falsos positivos e 170 falsos negativos**. Precisão de 72,03% significa
+Houve **950 falsos positivos e 160 falsos negativos**. Precisão de 67,86% significa
 que essa fração dos alertas S/V/F coincide com o rótulo da base. Seu complemento,
-27,97%, é a fração de alertas incorretos; a taxa de falsos positivos entre os N
-é outra medida, de 4,28%. Esses denominadores não são intercambiáveis.
+32,14%, é a fração de alertas incorretos; a taxa de falsos positivos entre os N
+é outra medida, de 5,24%. Esses denominadores não são intercambiáveis.
 
 Os valores vêm de [ecg_resultados.json](dados/ecg_resultados.json),
 [métricas por classe](dados/ecg_metricas_classes.csv),
 [matriz de confusão](dados/ecg_matriz_confusao.csv) e
 [histórico de treino](dados/ecg_historico.csv). A última acurácia da validação foi
 conferida com a avaliação do modelo atual. Salvar e recarregar o modelo preservou
-as previsões verificadas. Duas execuções completas com semente 42 e
-`PYTHONHASHSEED=0` produziram as mesmas métricas e matriz de confusão nesta máquina;
+as previsões verificadas. Duas execuções completas, pelo script e pelo JupyterLab,
+com semente 42 e `PYTHONHASHSEED=0` produziram as mesmas métricas e matriz de confusão nesta máquina;
 a conferência está em [ecg_reproducao.json](dados/ecg_reproducao.json).
-Isso não promete reprodução idêntica em outros ambientes.
+A célula de treinamento reinicia a semente; inicializadores e Dropout têm sementes
+locais explícitas. Isso não promete reprodução idêntica em outros ambientes.
 [ecg_divisao.csv](dados/ecg_divisao.csv) identifica as linhas
 usadas; [exemplos_ecg](dados/exemplos_ecg) contém as imagens e sua origem.
 

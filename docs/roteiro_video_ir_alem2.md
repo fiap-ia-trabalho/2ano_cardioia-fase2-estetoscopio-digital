@@ -48,7 +48,7 @@ trocar épocas, amostra ou limiar entre o treino mostrado e a avaliação.
 > A rede normaliza e achata os pixels. Em seguida, usa camadas densas com
 > 128, 64 e 32 neurônios, ReLU e Dropout. A saída Sigmoid tem limiar de meio.
 > Treinamos dez épocas com Adam e binary cross-entropy. A validação terminou
-> em 93,79 por cento, e conferimos esse valor com o modelo atual.
+> em 93,17 por cento, e conferimos esse valor com o modelo atual.
 > A perda da validação oscila; o Dropout não garante ausência de sobreajuste.
 
 ## 4. Avaliação e erros — 1:55 a 2:50
@@ -57,11 +57,11 @@ trocar épocas, amostra ou limiar entre o treino mostrado e a avaliação.
 
 **Fala sugerida:**
 
-> No teste separado, com 20.284 batimentos, a acurácia foi 95,34 por cento.
-> Para o grupo alterado, o recall foi 92,15 por cento e a precisão foi 72,03.
-> Houve 775 falsos positivos e 170 falsos negativos.
+> No teste separado, com 20.284 batimentos, a acurácia foi 94,53 por cento.
+> Para o grupo alterado, o recall foi 92,61 por cento e a precisão foi 67,86.
+> Houve 950 falsos positivos e 160 falsos negativos.
 > Precisão mede acertos entre os alertas. A taxa de falsos positivos tem
-> outro denominador: entre os casos N, foi 4,28 por cento.
+> outro denominador: entre os casos N, foi 5,24 por cento.
 > Sempre prever N daria 89,32 por cento de acurácia, mas não identificaria
 > nenhum caso alterado. Por isso mostramos as métricas por classe e os erros.
 
