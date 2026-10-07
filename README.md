@@ -25,15 +25,31 @@ Projeto acadêmico — FIAP, 2º ano de Inteligência Artificial.
 - **Tutor(a):** Leonardo Ruiz Orabona
 - **Coordenador(a):** [ANDRÉ GODOI](https://www.linkedin.com/in/andregodoichiovato)
 
-## 🎥 Vídeo de demonstração
+## 🎥 Vídeos de demonstração e acesso às entregas
 
-**Vídeo ainda não publicado.** Após a gravação, incluir aqui o link do YouTube em
-visibilidade **não listado**, conforme o enunciado.
+Os três vídeos foram publicados no YouTube como **não listados**, cada um com menos
+de quatro minutos. As durações abaixo são as exibidas pelo YouTube.
 
-Vídeo de até 4 minutos com a execução completa da solução: leitura dos relatos e do mapa
-de conhecimento, extração de sintomas e sugestão de diagnóstico (Parte 1), e treinamento,
-avaliação e teste do classificador de risco (Parte 2). O roteiro está em
-[docs/roteiro_video.md](docs/roteiro_video.md).
+| Entrega | Vídeo | Código e documentação |
+|---|---|---|
+| Atividade básica — extração de sintomas e classificação de risco | [Assistir — 3min59s](https://youtu.be/bK4_8Aduo00) | [Notebook 01](notebooks/01_extracao_sintomas.ipynb) e [notebook 02](notebooks/02_classificador_risco.ipynb), neste repositório |
+| Ir Além 1 — portal React | [Assistir — 3min37s](https://youtu.be/tbczinvMLLk) | [Repositório CardioIA Portal](https://github.com/fiap-ia-trabalho/fiap-ia-trabalho-cardioia-portal) |
+| Ir Além 2 — imagens de ECG e MLP | [Assistir — 3min24s](https://youtu.be/xxkzZaIitig) | [Notebook 03](notebooks/03_diagnostico_visual.ipynb) e [exemplos de imagens](dados/exemplos_ecg), neste repositório |
+
+O vídeo da atividade básica mostra os relatos, o mapa de conhecimento, a extração de
+sintomas e a avaliação do classificador de risco. O [roteiro](docs/roteiro_video.md)
+é material de apoio à gravação.
+
+### Organização dos desafios Ir Além
+
+O **Ir Além 1** fica em um repositório próprio, com o nome
+`fiap-ia-trabalho-cardioia-portal`, seguindo o formato `nome-do-grupo-cardioia-portal`
+pedido no enunciado. É uma aplicação React independente.
+
+O **Ir Além 2** está na pasta `notebooks/` deste repositório, junto dos dados,
+exemplos de imagens, resultados e instruções de execução. O enunciado exige um
+repositório público com esses materiais, sem exigir um repositório separado.
+Os três trabalhos podem ser acessados pela tabela acima.
 
 ## Entregáveis e organização
 
@@ -126,7 +142,7 @@ Repositório anterior: [Batimentos de Dados](https://github.com/fiap-ia-trabalho
 O desafio adicional está no repositório público
 [CardioIA Portal](https://github.com/fiap-ia-trabalho/fiap-ia-trabalho-cardioia-portal).
 Ele contém a interface React com login simulado, pacientes, agendamentos e dashboard,
-com instruções de execução e roteiro para seu próprio vídeo de demonstração.
+com instruções de execução e [vídeo de demonstração não listado](https://youtu.be/tbczinvMLLk).
 O portal usa dados fictícios e não integra os modelos de texto desta entrega.
 
 ## Parte 1 — Extração de sintomas
@@ -364,10 +380,10 @@ não comprova sua eliminação. Não avaliamos calibração, pacientes independe
 fotografias clínicas nem generalização para outros equipamentos. Boa acurácia
 não garante segurança clínica. Consulte [governança do Ir Além 2](docs/GOVERNANCA_IR_ALEM2.md).
 
-**Vídeo do Ir Além 2 ainda não publicado.** Incluir aqui seu link do YouTube como
-não listado, com até quatro minutos. O [roteiro](docs/roteiro_video_ir_alem2.md)
-mostra quais telas, código, imagens e resultados apresentar. Esta demonstração
-é adicional ao vídeo da entrega principal e ao vídeo do portal.
+**[Assistir ao vídeo do Ir Além 2 — 3min24s](https://youtu.be/xxkzZaIitig)**,
+publicado como não listado. A demonstração apresenta dados, imagens, arquitetura,
+treinamento e avaliação da MLP. O [roteiro](docs/roteiro_video_ir_alem2.md) é material
+de apoio à gravação. Este vídeo é adicional ao da atividade básica e ao do portal.
 
 ## Interpretação, vieses e governança
 
