@@ -34,22 +34,24 @@ de quatro minutos. As durações abaixo são as exibidas pelo YouTube.
 |---|---|---|
 | Atividade básica — extração de sintomas e classificação de risco | [Assistir — 3min59s](https://youtu.be/bK4_8Aduo00) | [Notebook 01](notebooks/01_extracao_sintomas.ipynb) e [notebook 02](notebooks/02_classificador_risco.ipynb), neste repositório |
 | Ir Além 1 — portal React | [Assistir — 3min37s](https://youtu.be/tbczinvMLLk) | [Repositório CardioIA Portal](https://github.com/fiap-ia-trabalho/fiap-ia-trabalho-cardioia-portal) |
-| Ir Além 2 — imagens de ECG e MLP | [Assistir — 3min24s](https://youtu.be/xxkzZaIitig) | [Notebook 03](notebooks/03_diagnostico_visual.ipynb) e [exemplos de imagens](dados/exemplos_ecg), neste repositório |
+| Ir Além 2 — imagens de ECG e MLP | [Assistir — 3min24s](https://youtu.be/xxkzZaIitig) | [Repositório de diagnóstico visual](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-diagnostico-visual) |
 
 O vídeo da atividade básica mostra os relatos, o mapa de conhecimento, a extração de
 sintomas e a avaliação do classificador de risco. O [roteiro](docs/roteiro_video.md)
 é material de apoio à gravação.
 
-### Organização dos desafios Ir Além
+### Organização das três entregas
 
-O **Ir Além 1** fica em um repositório próprio, com o nome
-`fiap-ia-trabalho-cardioia-portal`, seguindo o formato `nome-do-grupo-cardioia-portal`
-pedido no enunciado. É uma aplicação React independente.
+Cada atividade tem um repositório público próprio:
 
-O **Ir Além 2** está na pasta `notebooks/` deste repositório, junto dos dados,
-exemplos de imagens, resultados e instruções de execução. O enunciado exige um
-repositório público com esses materiais, sem exigir um repositório separado.
-Os três trabalhos podem ser acessados pela tabela acima.
+- **Atividade básica:** este repositório contém as Partes 1 e 2, com relatos,
+  mapa de conhecimento, extração de sintomas e classificação de risco por texto.
+- **Ir Além 1:** [CardioIA Portal](https://github.com/fiap-ia-trabalho/fiap-ia-trabalho-cardioia-portal),
+  com nome no formato `nome-do-grupo-cardioia-portal`, código React e README próprio.
+- **Ir Além 2:** [Diagnóstico visual com MLP](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-diagnostico-visual),
+  com notebook, imagens de ECG, resultados, dependências e README próprio.
+
+A tabela acima reúne os três vídeos e os respectivos repositórios.
 
 ## Entregáveis e organização
 
@@ -284,106 +286,17 @@ a dificuldade e a composição dos conjuntos de avaliação.
 
 ## Ir Além 2 — Imagens de ECG e rede neural MLP
 
-O [notebook 03](notebooks/03_diagnostico_visual.ipynb) classifica imagens de batimentos
-derivadas da [base recomendada pela FIAP](https://www.kaggle.com/datasets/shayanfazeli/heartbeat),
-versão 1. A base fornece CSVs, enquanto o enunciado descreve imagens. Nossa adaptação
-é explícita: desenhamos o sinal em RGB 256×256, convertemos para cinza e redimensionamos
-para 64×64. **A rede recebe os pixels das imagens**, normalizados e achatados com Flatten.
-São traçados derivados dos sinais públicos, sem serem fotografias de exames completos.
+O desafio foi transferido para o repositório público próprio
+[CardioIA — diagnóstico visual](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-diagnostico-visual). Ele contém:
 
-![Exemplos de traçados e processamento](docs/figuras/ecg_exemplos.png)
+- [Notebook 03 comentado e com saídas salvas](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-diagnostico-visual/blob/main/notebooks/03_diagnostico_visual.ipynb).
+- [Exemplos de imagens RGB e em cinza](https://github.com/fiap-ia-trabalho/2ano_cardioia-fase2-diagnostico-visual/tree/main/dados/exemplos_ecg).
+- MLP Keras, treinamento, gráficos, matriz de confusão e métricas.
+- README com dados, pré-processamento, instalação e execução.
+- [Vídeo não listado — 3min24s](https://youtu.be/xxkzZaIitig).
 
-### Dados, divisão e arquitetura
-
-- Cada linha tem 187 amplitudes temporais e um rótulo. Os sinais já vêm segmentados,
-  reamostrados e preenchidos com zeros pela preparação da base.
-- N (código 0) é o grupo normal definido na base; S/V/F (1/2/3) compõem o grupo alterado.
-  Q (4), de batimentos não classificados, é excluída. Isso não diagnostica a saúde de uma pessoa.
-- A amostra de trabalho tem 6.000 batimentos de cada classe: **9.600 para treino e
-  2.400 para validação**. A seleção e a divisão usam semente 42.
-- O teste usa o arquivo separado `mitbih_test.csv`, com **20.284 batimentos** após excluir Q,
-  preservando a distribuição dos rótulos restantes. Não representa prevalência clínica.
-- O notebook verifica duplicatas exatas e documenta sua contagem; nesta execução,
-  houve zero duplicatas/conflitos excluídos do pool de treino e zero duplicatas de
-  treino/validação excluídas do teste. O CSV não permite verificar separação por paciente.
-- A MLP Keras usa Dense 128 → 64 → 32, ReLU, Dropout 0,3/0,2 e saída Sigmoid.
-  Adam e binary cross-entropy treinam por dez épocas fixas, com lotes de 64.
-  O limiar de decisão é 0,5, definido antes da avaliação final.
-
-### Executar o Ir Além 2
-
-Depois de criar e ativar `.venv` como explicado acima:
-
-```bash
-python -m pip install -r requirements-ir-alem2.txt
-python -m ipykernel install --prefix .venv --name cardioia-ecg --display-name "CardioIA ECG (.venv)" --env PYTHONHASHSEED 0
-python src/baixar_ecg.py
-python src/executar_ir_alem2.py
-```
-
-O ambiente validado usa Python 3.13.7, TensorFlow 2.21.0, Keras 3.15.1, h5py 3.14.0,
-ml_dtypes 0.6.0, Pillow 12.0.0 e Matplotlib 3.10.7, além das versões fixadas da entrega
-principal. O treinamento usa CPU e uma thread. O script executa o notebook inteiro em
-ordem e salva as saídas quando todas as células terminam sem erro.
-
-O download mantém `dados/mitbih_train.csv.gz` e `dados/mitbih_test.csv.gz`, com compressão
-sem perdas. Os hashes são conferidos contra [ecg_origem.json](dados/ecg_origem.json).
-Também é possível baixar a versão 1 manualmente e colocar os dois CSVs sem compressão
-em `dados/`. O notebook aceita ambos os formatos; não procura na pasta errada de execução.
-Os arquivos grandes e `modelos/cardioia_ecg.keras` ficam fora do Git.
-
-Para abrir no JupyterLab, use `abrir_ir_alem2.bat` no Windows ou
-`python -m jupyterlab notebooks/03_diagnostico_visual.ipynb`. Confira o kernel
-**CardioIA ECG (.venv)**. O atalho `executar_ir_alem2.bat` prepara a base e refaz a execução.
-
-### Resultados verificados em 07/10/2026
-
-| Medida | Resultado |
-|---|---:|
-| Acurácia da validação, conferida com a última época | 93,17% |
-| Acurácia do teste separado | **94,53%** |
-| Precisão do grupo S/V/F | 67,86% |
-| Recall do grupo S/V/F | **92,61%** |
-| F1 do grupo S/V/F | 0,7833 |
-| Taxa de falsos positivos entre os N | 5,24% |
-| Fração de alertas incorretos entre as previsões S/V/F | 32,14% |
-| Referência que sempre prevê N: acurácia / recall S/V/F | 89,32% / 0% |
-
-| Rótulo da base / Previsão | N | S/V/F |
-|---|---:|---:|
-| N | 17.168 | 950 |
-| S/V/F | 160 | 2.006 |
-
-Houve **950 falsos positivos e 160 falsos negativos**. Precisão de 67,86% significa
-que essa fração dos alertas S/V/F coincide com o rótulo da base. Seu complemento,
-32,14%, é a fração de alertas incorretos; a taxa de falsos positivos entre os N
-é outra medida, de 5,24%. Esses denominadores não são intercambiáveis.
-
-Os valores vêm de [ecg_resultados.json](dados/ecg_resultados.json),
-[métricas por classe](dados/ecg_metricas_classes.csv),
-[matriz de confusão](dados/ecg_matriz_confusao.csv) e
-[histórico de treino](dados/ecg_historico.csv). A última acurácia da validação foi
-conferida com a avaliação do modelo atual. Salvar e recarregar o modelo preservou
-as previsões verificadas. Duas execuções completas, pelo script e pelo JupyterLab,
-com semente 42 e `PYTHONHASHSEED=0` produziram as mesmas métricas e matriz de confusão nesta máquina;
-a conferência está em [ecg_reproducao.json](dados/ecg_reproducao.json).
-A célula de treinamento reinicia a semente; inicializadores e Dropout têm sementes
-locais explícitas. Isso não promete reprodução idêntica em outros ambientes.
-[ecg_divisao.csv](dados/ecg_divisao.csv) identifica as linhas
-usadas; [exemplos_ecg](dados/exemplos_ecg) contém as imagens e sua origem.
-
-### Limitações e vídeo
-
-A perda da validação oscilou e terminou acima de seu menor valor, enquanto a perda
-de treino caiu; os gráficos mostram um sinal compatível com sobreajuste. Dropout
-não comprova sua eliminação. Não avaliamos calibração, pacientes independentes,
-fotografias clínicas nem generalização para outros equipamentos. Boa acurácia
-não garante segurança clínica. Consulte [governança do Ir Além 2](docs/GOVERNANCA_IR_ALEM2.md).
-
-**[Assistir ao vídeo do Ir Além 2 — 3min24s](https://youtu.be/xxkzZaIitig)**,
-publicado como não listado. A demonstração apresenta dados, imagens, arquitetura,
-treinamento e avaliação da MLP. O [roteiro](docs/roteiro_video_ir_alem2.md) é material
-de apoio à gravação. Este vídeo é adicional ao da atividade básica e ao do portal.
+Os traçados são imagens derivadas dos sinais públicos da base recomendada pela FIAP.
+A adaptação, os resultados e as limitações estão descritos no repositório do desafio.
 
 ## Interpretação, vieses e governança
 
