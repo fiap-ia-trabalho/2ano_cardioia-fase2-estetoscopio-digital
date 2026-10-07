@@ -10,3 +10,8 @@ Thumbs.db
 .idea/
 tmp/
 .entrega/
+dados/mitbih_train.csv
+dados/mitbih_test.csv
+dados/mitbih_*.csv.gz
+dados/*.part
+modelos/

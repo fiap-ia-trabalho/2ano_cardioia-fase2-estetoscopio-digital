@@ -266,20 +266,107 @@ compartilhar variações semelhantes entre treino e teste, mas a diferença isol
 mede uma contribuição causal exclusiva de vazamento. As estratégias também alteram
 a dificuldade e a composição dos conjuntos de avaliação.
 
-## Ir Além 2 — Diagnóstico Visual com Rede Neural (MLP)
+## Ir Além 2 — Imagens de ECG e rede neural MLP
 
-Como desafio adicional, a equipe implementou um classificador para séries temporais de Eletrocardiogramas (ECG) utilizando Deep Learning no arquivo `notebooks/03_diagnostico_visual.ipynb`.
+O [notebook 03](notebooks/03_diagnostico_visual.ipynb) classifica imagens de batimentos
+derivadas da [base recomendada pela FIAP](https://www.kaggle.com/datasets/shayanfazeli/heartbeat),
+versão 1. A base fornece CSVs, enquanto o enunciado descreve imagens. Nossa adaptação
+é explícita: desenhamos o sinal em RGB 256×256, convertemos para cinza e redimensionamos
+para 64×64. **A rede recebe os pixels das imagens**, normalizados e achatados com Flatten.
+São traçados derivados dos sinais públicos, sem serem fotografias de exames completos.
 
-### Dados e Arquitetura
-- **Dataset:** MIT-BIH Arrhythmia Database (Sinais com 187 features numéricas por batimento). Para reproduzir a execução, é necessário baixar o arquivo `mitbih_train.csv` do Kaggle e colocá-lo na pasta `dados/`.
-- **Pré-processamento:** As 5 classes originais do dataset foram convertidas para classificação binária (`0.0` = Normal; `Qualquer outra classe` = Anormal), mantendo a proporção real por meio de estratificação.
-- **Rede Neural:** Perceptron Multicamadas (MLP) construída com Keras/TensorFlow. Possui 3 camadas densas ocultas (128, 64 e 32 neurônios), intercaladas com `Dropout` (0.3 e 0.2) para mitigar o *overfitting*. A camada de saída utiliza ativação *Sigmoid* com função de perda *binary_crossentropy*.
+![Exemplos de traçados e processamento](docs/figuras/ecg_exemplos.png)
 
-### Métricas Alcançadas
-- **Acurácia Global:** **97,36%** na base de validação isolada.
-- **Sensibilidade em Anomalias (Recall):** **88%**, garantindo alta taxa de identificação de batimentos patológicos.
-- **Precisão em Anomalias:** **97%**, resultando em uma taxa mínima de falsos positivos (apenas 3%).
-- **F1-Score (Classe Anormal):** **0,92**, demonstrando excelente equilíbrio no tratamento do desbalanceamento natural entre exames saudáveis e patológicos.
+### Dados, divisão e arquitetura
+
+- Cada linha tem 187 amplitudes temporais e um rótulo. Os sinais já vêm segmentados,
+  reamostrados e preenchidos com zeros pela preparação da base.
+- N (código 0) é o grupo normal definido na base; S/V/F (1/2/3) compõem o grupo alterado.
+  Q (4), de batimentos não classificados, é excluída. Isso não diagnostica a saúde de uma pessoa.
+- A amostra de trabalho tem 6.000 batimentos de cada classe: **9.600 para treino e
+  2.400 para validação**. A seleção e a divisão usam semente 42.
+- O teste usa o arquivo separado `mitbih_test.csv`, com **20.284 batimentos** após excluir Q,
+  preservando a distribuição dos rótulos restantes. Não representa prevalência clínica.
+- O notebook verifica duplicatas exatas e documenta sua contagem; nesta execução,
+  houve zero duplicatas/conflitos excluídos do pool de treino e zero duplicatas de
+  treino/validação excluídas do teste. O CSV não permite verificar separação por paciente.
+- A MLP Keras usa Dense 128 → 64 → 32, ReLU, Dropout 0,3/0,2 e saída Sigmoid.
+  Adam e binary cross-entropy treinam por dez épocas fixas, com lotes de 64.
+  O limiar de decisão é 0,5, definido antes da avaliação final.
+
+### Executar o Ir Além 2
+
+Depois de criar e ativar `.venv` como explicado acima:
+
+```bash
+python -m pip install -r requirements-ir-alem2.txt
+python -m ipykernel install --prefix .venv --name cardioia-ecg --display-name "CardioIA ECG (.venv)" --env PYTHONHASHSEED 0
+python src/baixar_ecg.py
+python src/executar_ir_alem2.py
+```
+
+O ambiente validado usa Python 3.13.7, TensorFlow 2.21.0, Keras 3.15.1, h5py 3.14.0,
+ml_dtypes 0.6.0, Pillow 12.0.0 e Matplotlib 3.10.7, além das versões fixadas da entrega
+principal. O treinamento usa CPU e uma thread. O script executa o notebook inteiro em
+ordem e salva as saídas quando todas as células terminam sem erro.
+
+O download mantém `dados/mitbih_train.csv.gz` e `dados/mitbih_test.csv.gz`, com compressão
+sem perdas. Os hashes são conferidos contra [ecg_origem.json](dados/ecg_origem.json).
+Também é possível baixar a versão 1 manualmente e colocar os dois CSVs sem compressão
+em `dados/`. O notebook aceita ambos os formatos; não procura na pasta errada de execução.
+Os arquivos grandes e `modelos/cardioia_ecg.keras` ficam fora do Git.
+
+Para abrir no JupyterLab, use `abrir_ir_alem2.bat` no Windows ou
+`python -m jupyterlab notebooks/03_diagnostico_visual.ipynb`. Confira o kernel
+**CardioIA ECG (.venv)**. O atalho `executar_ir_alem2.bat` prepara a base e refaz a execução.
+
+### Resultados verificados em 07/10/2026
+
+| Medida | Resultado |
+|---|---:|
+| Acurácia da validação, conferida com a última época | 93,79% |
+| Acurácia do teste separado | **95,34%** |
+| Precisão do grupo S/V/F | 72,03% |
+| Recall do grupo S/V/F | **92,15%** |
+| F1 do grupo S/V/F | 0,8086 |
+| Taxa de falsos positivos entre os N | 4,28% |
+| Fração de alertas incorretos entre as previsões S/V/F | 27,97% |
+| Referência que sempre prevê N: acurácia / recall S/V/F | 89,32% / 0% |
+
+| Rótulo da base / Previsão | N | S/V/F |
+|---|---:|---:|
+| N | 17.343 | 775 |
+| S/V/F | 170 | 1.996 |
+
+Houve **775 falsos positivos e 170 falsos negativos**. Precisão de 72,03% significa
+que essa fração dos alertas S/V/F coincide com o rótulo da base. Seu complemento,
+27,97%, é a fração de alertas incorretos; a taxa de falsos positivos entre os N
+é outra medida, de 4,28%. Esses denominadores não são intercambiáveis.
+
+Os valores vêm de [ecg_resultados.json](dados/ecg_resultados.json),
+[métricas por classe](dados/ecg_metricas_classes.csv),
+[matriz de confusão](dados/ecg_matriz_confusao.csv) e
+[histórico de treino](dados/ecg_historico.csv). A última acurácia da validação foi
+conferida com a avaliação do modelo atual. Salvar e recarregar o modelo preservou
+as previsões verificadas. Duas execuções completas com semente 42 e
+`PYTHONHASHSEED=0` produziram as mesmas métricas e matriz de confusão nesta máquina;
+a conferência está em [ecg_reproducao.json](dados/ecg_reproducao.json).
+Isso não promete reprodução idêntica em outros ambientes.
+[ecg_divisao.csv](dados/ecg_divisao.csv) identifica as linhas
+usadas; [exemplos_ecg](dados/exemplos_ecg) contém as imagens e sua origem.
+
+### Limitações e vídeo
+
+A perda da validação oscilou e terminou acima de seu menor valor, enquanto a perda
+de treino caiu; os gráficos mostram um sinal compatível com sobreajuste. Dropout
+não comprova sua eliminação. Não avaliamos calibração, pacientes independentes,
+fotografias clínicas nem generalização para outros equipamentos. Boa acurácia
+não garante segurança clínica. Consulte [governança do Ir Além 2](docs/GOVERNANCA_IR_ALEM2.md).
+
+**Vídeo do Ir Além 2 ainda não publicado.** Incluir aqui seu link do YouTube como
+não listado, com até quatro minutos. O [roteiro](docs/roteiro_video_ir_alem2.md)
+mostra quais telas, código, imagens e resultados apresentar. Esta demonstração
+é adicional ao vídeo da entrega principal e ao vídeo do portal.
 
 ## Interpretação, vieses e governança
 

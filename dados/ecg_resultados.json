@@ -1,0 +1,63 @@
+{
+  "experimento": "MLP de imagens rasterizadas de ECG; N versus S/V/F; Q excluída",
+  "data_validacao": "2026-10-07",
+  "python": "3.13.7",
+  "versoes": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.8.0",
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "h5py": "3.14.0",
+    "ml_dtypes": "0.6.0",
+    "pillow": "12.0.0",
+    "matplotlib": "3.10.7"
+  },
+  "semente": 42,
+  "epocas": 10,
+  "batch_size": 64,
+  "limiar": 0.5,
+  "imagem": {
+    "original_rgb": [
+      256,
+      256
+    ],
+    "cinza": [
+      64,
+      64
+    ],
+    "entrada": "pixels uint8; Rescaling(-1/255, offset=1); Flatten"
+  },
+  "treino": 9600,
+  "validacao": 2400,
+  "teste": 20284,
+  "q_excluidos_treino": 6431,
+  "q_excluidos_teste": 1608,
+  "duplicatas_conflitos_excluidos_pool_treino": 0,
+  "duplicatas_treino_validacao_excluidas_teste": 0,
+  "acuracia_validacao": 0.9379166960716248,
+  "acuracia_teste": 0.9534115559061329,
+  "precisao_alterado": 0.7203175748827139,
+  "recall_alterado": 0.9215143120960295,
+  "f1_alterado": 0.8085882114644521,
+  "taxa_falsos_positivos": 0.04277514074401148,
+  "fracao_alertas_incorretos": 0.2796824251172862,
+  "matriz_confusao_N_SVF": [
+    [
+      17343,
+      775
+    ],
+    [
+      170,
+      1996
+    ]
+  ],
+  "tn": 17343,
+  "fp": 775,
+  "fn": 170,
+  "tp": 1996,
+  "acuracia_referencia_sempre_N": 0.8932163281404062,
+  "origem": "dados/ecg_origem.json",
+  "selecao": "dados/ecg_divisao.csv",
+  "previsoes_estaveis_recarregando_modelo": true
+}

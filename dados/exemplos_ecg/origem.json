@@ -1,0 +1,34 @@
+[
+  {
+    "arquivo": "mitbih_train.csv",
+    "linha_zero": 57286,
+    "classe_original": "N",
+    "conjunto": "treino",
+    "original": "n_linha_057286_original.png",
+    "processada": "n_linha_057286_cinza64.png"
+  },
+  {
+    "arquivo": "mitbih_train.csv",
+    "linha_zero": 74030,
+    "classe_original": "S",
+    "conjunto": "treino",
+    "original": "s_linha_074030_original.png",
+    "processada": "s_linha_074030_cinza64.png"
+  },
+  {
+    "arquivo": "mitbih_train.csv",
+    "linha_zero": 78340,
+    "classe_original": "V",
+    "conjunto": "treino",
+    "original": "v_linha_078340_original.png",
+    "processada": "v_linha_078340_cinza64.png"
+  },
+  {
+    "arquivo": "mitbih_train.csv",
+    "linha_zero": 81004,
+    "classe_original": "F",
+    "conjunto": "treino",
+    "original": "f_linha_081004_original.png",
+    "processada": "f_linha_081004_cinza64.png"
+  }
+]

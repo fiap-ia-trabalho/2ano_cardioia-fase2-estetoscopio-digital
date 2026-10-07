@@ -1,0 +1,35 @@
+{
+  "semente": 42,
+  "pythonhashseed": "0",
+  "resultados_identicos": true,
+  "execucoes": [
+    {
+      "acuracia_validacao": 0.9379166960716248,
+      "acuracia_teste": 0.9534115559061329,
+      "matriz_confusao_N_SVF": [
+        [
+          17343,
+          775
+        ],
+        [
+          170,
+          1996
+        ]
+      ]
+    },
+    {
+      "acuracia_validacao": 0.9379166960716248,
+      "acuracia_teste": 0.9534115559061329,
+      "matriz_confusao_N_SVF": [
+        [
+          17343,
+          775
+        ],
+        [
+          170,
+          1996
+        ]
+      ]
+    }
+  ]
+}
